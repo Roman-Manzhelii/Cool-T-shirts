@@ -1,0 +1,191 @@
+[{
+  "_id": {
+    "$oid": "65b38ace970150ec28c38f6d"
+  },
+  "color": "Red",
+  "style": "Casual",
+  "size": "M",
+  "photo": [
+    "photo1.jpg",
+    "photo2.jpg"
+  ],
+  "materials": [
+    "cotton",
+    "polyester"
+  ],
+  "country of manufacture": "USA",
+  "price": 59.99,
+  "brand": "Nike"
+},
+{
+  "_id": {
+    "$oid": "65b38ace970150ec28c38f6e"
+  },
+  "color": "Blue",
+  "style": "Formal",
+  "size": "L",
+  "photo": [
+    "photo3.jpg",
+    "photo4.jpg"
+  ],
+  "materials": [
+    "silk",
+    "wool"
+  ],
+  "country of manufacture": "France",
+  "price": 89.99,
+  "brand": "Adidas"
+},
+{
+  "_id": {
+    "$oid": "65b38ace970150ec28c38f6f"
+  },
+  "color": "Green",
+  "style": "Sport",
+  "size": "XL",
+  "photo": [
+    "photo5.jpg",
+    "photo6.jpg"
+  ],
+  "materials": [
+    "nylon",
+    "spandex"
+  ],
+  "country of manufacture": "China",
+  "price": 49.99,
+  "brand": "Puma"
+},
+{
+  "_id": {
+    "$oid": "65b38ace970150ec28c38f70"
+  },
+  "color": "Yellow",
+  "style": "Casual",
+  "size": "S",
+  "photo": [
+    "photo7.jpg",
+    "photo8.jpg"
+  ],
+  "materials": [
+    "linen",
+    "rayon"
+  ],
+  "country of manufacture": "Italy",
+  "price": 39.99,
+  "brand": "Gucci"
+},
+{
+  "_id": {
+    "$oid": "65b38ace970150ec28c38f71"
+  },
+  "color": "Black",
+  "style": "Formal",
+  "size": "M",
+  "photo": [
+    "photo9.jpg",
+    "photo10.jpg"
+  ],
+  "materials": [
+    "leather",
+    "suede"
+  ],
+  "country of manufacture": "Germany",
+  "price": 129.99,
+  "brand": "Prada"
+},
+{
+  "_id": {
+    "$oid": "65b38ace970150ec28c38f72"
+  },
+  "color": "White",
+  "style": "Sport",
+  "size": "L",
+  "photo": [
+    "photo11.jpg",
+    "photo12.jpg"
+  ],
+  "materials": [
+    "polyester",
+    "elastane"
+  ],
+  "country of manufacture": "Brazil",
+  "price": 54.99,
+  "brand": "Reebok"
+},
+{
+  "_id": {
+    "$oid": "65b38ace970150ec28c38f73"
+  },
+  "color": "Grey",
+  "style": "Casual",
+  "size": "XL",
+  "photo": [
+    "photo13.jpg",
+    "photo14.jpg"
+  ],
+  "materials": [
+    "denim",
+    "canvas"
+  ],
+  "country of manufacture": "India",
+  "price": 44.99,
+  "brand": "Levi's"
+},
+{
+  "_id": {
+    "$oid": "65b38ace970150ec28c38f74"
+  },
+  "color": "Pink",
+  "style": "Formal",
+  "size": "S",
+  "photo": [
+    "photo15.jpg",
+    "photo16.jpg"
+  ],
+  "materials": [
+    "silk",
+    "cotton",
+    "denim"
+  ],
+  "country of manufacture": "Japan",
+  "price": 74.99,
+  "brand": "Dolce & Gabbana"
+},
+{
+  "_id": {
+    "$oid": "65b38ace970150ec28c38f75"
+  },
+  "color": "Orange",
+  "style": "Sport",
+  "size": "M",
+  "photo": [
+    "photo17.jpg",
+    "photo18.jpg"
+  ],
+  "materials": [
+    "polyester",
+    "nylon"
+  ],
+  "country of manufacture": "South Korea",
+  "price": 34.99,
+  "brand": "Under Armour"
+},
+{
+  "_id": {
+    "$oid": "65b38ace970150ec28c38f76"
+  },
+  "color": "Purple",
+  "style": "Casual",
+  "size": "L",
+  "photo": [
+    "photo19.jpg",
+    "photo20.jpg"
+  ],
+  "materials": [
+    "wool",
+    "fleece"
+  ],
+  "country of manufacture": "Canada",
+  "price": 64.99,
+  "brand": "Lacoste"
+}]
