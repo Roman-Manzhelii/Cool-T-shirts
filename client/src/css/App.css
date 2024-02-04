@@ -95,8 +95,6 @@ color:pink;
 
 
 
-
-/* table of cars */
 .table-container table
 {
     width:100%;
@@ -131,8 +129,7 @@ color:pink;
     background-color: #ffa;
 }
 
-.add-new-car
+.add-new-tshirt
 {
     margin-top:1em;
 }
-/*end of table of cars */

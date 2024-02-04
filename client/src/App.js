@@ -8,14 +8,15 @@ import Register from "./components/Register"
 import ResetDatabase from "./components/ResetDatabase"
 import Login from "./components/Login"
 import Logout from "./components/Logout"
-import AddCar from "./components/AddCar"
-import EditCar from "./components/EditCar"
-import DeleteCar from "./components/DeleteCar"
-import DisplayAllCars from "./components/DisplayAllCars"
+import AddTshirt from "./components/AddTshirt"
+import EditTshirt from "./components/EditTshirt"
+import DeleteTshirt from "./components/DeleteTshirt"
+import DisplayAllCars from "./components/DisplayAllTshirts"
 import LoggedInRoute from "./components/LoggedInRoute"
 
 
 import {ACCESS_LEVEL_GUEST} from "./config/global_constants"
+import DisplayAllTshirts from "./components/DisplayAllTshirts";
 
 
 if (typeof sessionStorage.accessLevel === "undefined")
@@ -34,13 +35,13 @@ export default class App extends Component
                 <Switch>
                     <Route exact path="/Register" component={Register} />
                     <Route exact path="/ResetDatabase" component={ResetDatabase} />                    
-                    <Route exact path="/" component={DisplayAllCars} />
+                    <Route exact path="/" component={DisplayAllTshirts} />
                     <Route exact path="/Login" component={Login} />
                     <LoggedInRoute exact path="/Logout" component={Logout} />
-                    <LoggedInRoute exact path="/AddCar" component={AddCar} />
-                    <LoggedInRoute exact path="/EditCar/:id" component={EditCar} />
-                    <LoggedInRoute exact path="/DeleteCar/:id" component={DeleteCar} />
-                    <Route exact path="/DisplayAllCars" component={DisplayAllCars}/> 
+                    <LoggedInRoute exact path="/AddTshirt" component={AddTshirt} />
+                    <LoggedInRoute exact path="/EditTshirt/:id" component={EditTshirt} />
+                    <LoggedInRoute exact path="/DeleteTshirt/:id" component={DeleteTshirt} />
+                    <Route exact path="/DisplayAllTshirts" component={DisplayAllTshirts}/>
                     <Route path="*" component={DisplayAllCars}/>                            
                 </Switch>
             </BrowserRouter>
