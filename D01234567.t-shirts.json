@@ -4,7 +4,6 @@
   },
   "color": "Red",
   "style": "Casual",
-  "size": "M",
   "photo": [
     "photo1.jpg",
     "photo2.jpg"
@@ -13,9 +12,15 @@
     "cotton",
     "polyester"
   ],
-  "country of manufacture": "USA",
   "price": 59.99,
-  "brand": "Nike"
+  "brand": "Nike",
+  "country_of_manufacture": "USA",
+  "size": [
+    "S",
+    "M",
+    "L",
+    "XL"
+  ]
 },
 {
   "_id": {
@@ -23,7 +28,9 @@
   },
   "color": "Blue",
   "style": "Formal",
-  "size": "L",
+  "size": [
+    "L"
+  ],
   "photo": [
     "photo3.jpg",
     "photo4.jpg"
@@ -32,9 +39,9 @@
     "silk",
     "wool"
   ],
-  "country of manufacture": "France",
   "price": 89.99,
-  "brand": "Adidas"
+  "brand": "Adidas",
+  "country_of_manufacture": "France"
 },
 {
   "_id": {
@@ -42,7 +49,9 @@
   },
   "color": "Green",
   "style": "Sport",
-  "size": "XL",
+  "size": [
+    "XL"
+  ],
   "photo": [
     "photo5.jpg",
     "photo6.jpg"
@@ -51,9 +60,9 @@
     "nylon",
     "spandex"
   ],
-  "country of manufacture": "China",
   "price": 49.99,
-  "brand": "Puma"
+  "brand": "Puma",
+  "country_of_manufacture": "China"
 },
 {
   "_id": {
@@ -61,7 +70,9 @@
   },
   "color": "Yellow",
   "style": "Casual",
-  "size": "S",
+  "size": [
+    "S"
+  ],
   "photo": [
     "photo7.jpg",
     "photo8.jpg"
@@ -70,9 +81,9 @@
     "linen",
     "rayon"
   ],
-  "country of manufacture": "Italy",
   "price": 39.99,
-  "brand": "Gucci"
+  "brand": "Gucci",
+  "country_of_manufacture": "Italy"
 },
 {
   "_id": {
@@ -80,7 +91,9 @@
   },
   "color": "Black",
   "style": "Formal",
-  "size": "M",
+  "size": [
+    "M"
+  ],
   "photo": [
     "photo9.jpg",
     "photo10.jpg"
@@ -89,9 +102,9 @@
     "leather",
     "suede"
   ],
-  "country of manufacture": "Germany",
   "price": 129.99,
-  "brand": "Prada"
+  "brand": "Prada",
+  "country_of_manufacture": "Germany"
 },
 {
   "_id": {
@@ -99,7 +112,9 @@
   },
   "color": "White",
   "style": "Sport",
-  "size": "L",
+  "size": [
+    "L"
+  ],
   "photo": [
     "photo11.jpg",
     "photo12.jpg"
@@ -108,9 +123,9 @@
     "polyester",
     "elastane"
   ],
-  "country of manufacture": "Brazil",
   "price": 54.99,
-  "brand": "Reebok"
+  "brand": "Reebok",
+  "country_of_manufacture": "Brazil"
 },
 {
   "_id": {
@@ -118,7 +133,9 @@
   },
   "color": "Grey",
   "style": "Casual",
-  "size": "XL",
+  "size": [
+    "XL"
+  ],
   "photo": [
     "photo13.jpg",
     "photo14.jpg"
@@ -127,9 +144,9 @@
     "denim",
     "canvas"
   ],
-  "country of manufacture": "India",
   "price": 44.99,
-  "brand": "Levi's"
+  "brand": "Levi's",
+  "country_of_manufacture": "India"
 },
 {
   "_id": {
@@ -137,7 +154,9 @@
   },
   "color": "Pink",
   "style": "Formal",
-  "size": "S",
+  "size": [
+    "S"
+  ],
   "photo": [
     "photo15.jpg",
     "photo16.jpg"
@@ -147,9 +166,9 @@
     "cotton",
     "denim"
   ],
-  "country of manufacture": "Japan",
   "price": 74.99,
-  "brand": "Dolce & Gabbana"
+  "brand": "Dolce & Gabbana",
+  "country_of_manufacture": "Japan"
 },
 {
   "_id": {
@@ -157,7 +176,9 @@
   },
   "color": "Orange",
   "style": "Sport",
-  "size": "M",
+  "size": [
+    "M"
+  ],
   "photo": [
     "photo17.jpg",
     "photo18.jpg"
@@ -166,9 +187,9 @@
     "polyester",
     "nylon"
   ],
-  "country of manufacture": "South Korea",
   "price": 34.99,
-  "brand": "Under Armour"
+  "brand": "Under Armour",
+  "country_of_manufacture": "South Korea"
 },
 {
   "_id": {
@@ -176,7 +197,9 @@
   },
   "color": "Purple",
   "style": "Casual",
-  "size": "L",
+  "size": [
+    "M"
+  ],
   "photo": [
     "photo19.jpg",
     "photo20.jpg"
@@ -185,7 +208,7 @@
     "wool",
     "fleece"
   ],
-  "country of manufacture": "Canada",
   "price": 64.99,
-  "brand": "Lacoste"
+  "brand": "Lacoste",
+  "country_of_manufacture": "Canada"
 }]
