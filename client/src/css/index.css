@@ -15,5 +15,17 @@ code {
 footer{
   width: 100%;
   height: 400px;
-  background-color: #3545dc;
+  background-color: black;
+}
+header{
+  width: 100%;
+  height: 200px;
+  background-color: #000080;
+}
+
+header img{
+  height:150px;
+  width:150px;
+  margin-left:50px;
+  margin-top: 25px;
 }

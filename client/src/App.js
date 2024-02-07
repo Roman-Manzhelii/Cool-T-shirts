@@ -31,6 +31,7 @@ export default class App extends Component
     render() 
     {
         return (
+
             <BrowserRouter>
                 <Switch>
                     <Route exact path="/Register" component={Register} />
@@ -45,6 +46,7 @@ export default class App extends Component
                     <Route path="*" component={DisplayAllCars}/>                            
                 </Switch>
             </BrowserRouter>
+
         )
     }
 }
