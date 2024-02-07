@@ -56,18 +56,21 @@ export default class DisplayAllTshirts extends Component
   
     render() 
     {   
-        return (           
+        return (
+
             <div className="form-container">
-                {sessionStorage.accessLevel > ACCESS_LEVEL_GUEST ? 
+                {sessionStorage.accessLevel > ACCESS_LEVEL_GUEST ?
+
                     <div className="logout">
                         <Logout/>
                     </div>
                 :
-                    <div>
+                    <div className="nav-item">
                         <Link className="green-button" to={"/Login"}>Login</Link>
                         <Link className="blue-button" to={"/Register"}>Register</Link>  
                         <Link className="red-button" to={"/ResetDatabase"}>Reset Database</Link>  <br/><br/><br/>
                     </div>
+
                 }
 
                 <SortTshirts onSortChange={this.handleSortChange} />  <br/>

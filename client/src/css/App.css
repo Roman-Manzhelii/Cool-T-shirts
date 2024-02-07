@@ -5,14 +5,18 @@
 .form-container,
 .table-container 
 {
-  max-width: 700px;
+  max-width:100%;
   margin: 0 auto;
+
+}
+.form-container{
+
+    margin-top: 0;
 }
 
 .form-container
 {
       border:thin solid #aaaaaa;
-    padding: 20px;
     margin-left: auto;
     margin-right: auto;
     border-radius: 5px;
@@ -30,34 +34,15 @@
 .red-button,
 .blue-button
 {
-  padding: 7px 10px;
-  font-size: 0.875rem;
-  line-height: normal;
-  border-radius: 0.2rem;
-  color: #fff;
-  background-color: #28a745;
-  border-color: #28a745;
-  margin-right: 10px;
-  position: relative;
-  top: 1px;  
-  text-decoration: none;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
   cursor:pointer;
 }
 
-.green-button
-{
-    background-color: #28a745;
-}
 
-.red-button
-{
-    background-color: #dc3545;
-}
-
-.blue-button
-{
-    background-color: #3545dc;
-}
 
 .green-button:hover,
 .red-button:hover,
@@ -133,3 +118,11 @@ color:pink;
 {
     margin-top:1em;
 }
+
+.nav-item {
+display: flex;
+    width: 100%;
+    background-color: #0d0d26;
+    margin-top: 0;
+}
+
