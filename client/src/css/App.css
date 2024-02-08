@@ -94,10 +94,7 @@ color:pink;
     text-transform: capitalize;
 }
 
-.table-container tbody tr
-{
-    height:3em;
-}
+.
 
 .table-container thead th,
 .table-container tbody td
@@ -126,3 +123,17 @@ display: flex;
     margin-top: 0;
 }
 
+tbody{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+tr {
+    display: flex;
+    width: 300px;
+    height: 200px;
+    margin: 20px;
+    padding: 10px;
+    align-items: flex-end;
+}
