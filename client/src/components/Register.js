@@ -106,9 +106,10 @@ export default class Register extends Component
                     value = {this.state.confirmPassword}
                     onChange = {this.handleChange}
                 /><br/><br/>
-                
+                <div className="nav-item">
                 <LinkInClass value="Register New User" className="green-button" onClick={this.handleSubmit} />
                 <Link className="red-button" to={"/DisplayAllTshirts"}>Cancel</Link>
+                    </div>
             </form>
         )
     }

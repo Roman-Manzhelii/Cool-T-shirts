@@ -52,7 +52,7 @@ export default class Logout extends Component
     render()
     {
         return (
-            <div>   
+            <div className="nav-item">
         
                 {!this.state.isLoggedIn ? <Redirect to="/DisplayAllTshirts"/> : null}
                   

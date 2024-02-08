@@ -140,7 +140,7 @@ export default class AddTshirt extends Component
                         <Form.Control type="text" name="price" value={this.state.price} onChange={this.handleChange} />
                     </Form.Group> 
             
-                    <LinkInClass value="Add" className="green-button" onClick={this.handleSubmit}/>            
+                    <LinkInClass value="Add" className="addbutton" onClick={this.handleSubmit}/>
             
                     <Link className="red-button" to={"/DisplayAllTshirts"}>Cancel</Link>
                 </Form>
