@@ -22,6 +22,7 @@ export default class EditTshirt extends Component
             country_of_manufacture: ``,
             brand: ``,
             price: ``,
+            errorMessage: "",
             redirectToDisplayAllTshirts:sessionStorage.accessLevel < ACCESS_LEVEL_NORMAL_USER
         }
     }
@@ -37,6 +38,7 @@ export default class EditTshirt extends Component
             {
                 if (res.data.errorMessage)
                 {
+                    this.setState({errorMessage: "T-shirt details are incorrect. " + res.data.errorMessage})
                     console.log(res.data.errorMessage)    
                 }
                 else
@@ -55,6 +57,7 @@ export default class EditTshirt extends Component
             }
             else
             {
+                this.setState({errorMessage: "An unexpected error occurred."});
                 console.log(`Record not found`)
             }
         })
@@ -94,6 +97,7 @@ export default class EditTshirt extends Component
             {
                 if (res.data.errorMessage)
                 {
+                    this.setState({errorMessage: "T-shirt details are incorrect. " + res.data.errorMessage})
                     console.log(res.data.errorMessage)    
                 }
                 else
@@ -104,6 +108,7 @@ export default class EditTshirt extends Component
             }
             else
             {
+                this.setState({errorMessage: "An unexpected error occurred."});
                 console.log(`Record not updated`)
             }
         })
@@ -112,6 +117,12 @@ export default class EditTshirt extends Component
 
     render() 
     {
+        let errorMessageComponent = "";
+        if(this.state.errorMessage !== "")
+        {
+            errorMessageComponent = <div className="error"><br/>{this.state.errorMessage}</div>;
+        }
+
         return (
             <div className="form-container">
     
@@ -162,6 +173,8 @@ export default class EditTshirt extends Component
     
                     <Link className="red-button" to={"/DisplayAllTshirts"}>Cancel</Link>
                 </Form>
+
+                {errorMessageComponent}
             </div>
         )
     }

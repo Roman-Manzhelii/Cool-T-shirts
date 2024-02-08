@@ -8,74 +8,66 @@ import Logout from "./Logout"
 import {ACCESS_LEVEL_GUEST, ACCESS_LEVEL_ADMIN, SERVER_HOST} from "../config/global_constants"
 import SortTshirts from "./SortTshirts";
 import FilterTshirts from './FilterTshirts';
+import SearchTshirts from "./SearchTshirts";
 
 
-
-export default class DisplayAllTshirts extends Component
-{
-    constructor(props) 
-    {
-        super(props)
-        
+export default class DisplayAllTshirts extends Component {
+    constructor(props) {
+        super(props);
         this.state = {
-            tshirts:[],
+            tshirts: [],
+            searchedTshirts: [],
+            originalTshirts: [],
             filters: {
                 size: [],
                 color: [],
                 style: []
-            }
-        }
-    }
-    
-    
-    componentDidMount() 
-    {
-         axios.get(`${SERVER_HOST}/tshirts`)
-        .then(res =>
-        {
-            if(res.data)
-            {
-                if (res.data.errorMessage)
-                {
-                    console.log(res.data.errorMessage)
-                }
-                else
-                {
-                    console.log("Records read")
-                    this.setState({tshirts: res.data})
-                    console.log(res)
-                }
-            }
-            else
-            {
-                console.log("Record not found")
-            }
-        })
+            },
+            searchQuery: '',
+            sortOption: ''
+        };
     }
 
-  
-    render() 
-    {   
-        return (           
+
+    componentDidMount() {
+        axios.get(`${SERVER_HOST}/tshirts`)
+            .then(res => {
+                if (res.data) {
+                    this.setState({ originalTshirts: res.data, searchedTshirts: res.data, tshirts: res.data });
+                    console.log(res);
+                } else {
+                    console.log("No data found");
+                }
+            })
+            .catch(error => console.log(error));
+    }
+
+
+
+    render()
+    {
+        return (
             <div className="form-container">
-                {sessionStorage.accessLevel > ACCESS_LEVEL_GUEST ? 
+                {sessionStorage.accessLevel > ACCESS_LEVEL_GUEST ?
                     <div className="logout">
                         <Logout/>
                     </div>
                 :
                     <div>
                         <Link className="green-button" to={"/Login"}>Login</Link>
-                        <Link className="blue-button" to={"/Register"}>Register</Link>  
+                        <Link className="blue-button" to={"/Register"}>Register</Link>
                         <Link className="red-button" to={"/ResetDatabase"}>Reset Database</Link>  <br/><br/><br/>
                     </div>
                 }
 
-                <SortTshirts onSortChange={this.handleSortChange} />  <br/>
-                <FilterTshirts onFilterChange={this.handleFilterChange} />  <br/>
+                <SearchTshirts onSearch={this.handleSearch} />
+                <SortTshirts onSortChange={this.handleSortChange} />
+                <FilterTshirts onFilterChange={this.handleFilterChange} />
+
 
                 <div className="table-container">
                     <TshirtTable tshirts={this.state.tshirts} />
-                        
+
                     {sessionStorage.accessLevel >= ACCESS_LEVEL_ADMIN ?
                         <div className="add-new-tshirt">
                             <Link className="blue-button" to={"/AddTshirt"}>Add New T-shirt</Link>
@@ -84,56 +76,79 @@ export default class DisplayAllTshirts extends Component
                         null
                     }
                 </div>
-            </div> 
+            </div>
         )
     }
 
     handleSortChange = (sortOption) => {
-        let sortedTshirts = [...this.state.tshirts];
+        this.setState({ sortOption }, this.sortTshirts);
+    }
 
-        if (sortOption === 'price-low-high') {
-            sortedTshirts.sort((a, b) => a.price - b.price);
-        } else if (sortOption === 'price-high-low') {
-            sortedTshirts.sort((a, b) => b.price - a.price);
-        } else if (sortOption === 'brand') {
-            sortedTshirts.sort((a, b) => a.brand.toLowerCase().localeCompare(b.brand.toLowerCase()));
+    handleFilterChange = (filters) => {
+        this.setState({ filters }, this.filterTshirts);
+    }
+
+    handleSearch = (searchQuery) => {
+        this.setState({ searchQuery }, this.searchTshirts);
+    }
+
+    searchTshirts = () => {
+        let { originalTshirts, searchQuery} = this.state;
+
+        // Спочатку виконуємо пошук
+        let searchFilteredTshirts = searchQuery.trim() ? originalTshirts.filter(tshirt =>
+            tshirt.brand.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            tshirt.color.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            tshirt.country_of_manufacture.toLowerCase().includes(searchQuery.toLowerCase())
+        ) : [...originalTshirts];
+
+
+        // Оновлення стану з результатами, що вже відфільтровані та відповідають пошуковому запиту
+        this.setState({ tshirts: searchFilteredTshirts, searchedTshirts: searchFilteredTshirts }, this.filterTshirts);
+        console.log("Search", searchFilteredTshirts);
+    };
+
+
+
+    filterTshirts = () => {
+        let { searchedTshirts, filters } = this.state;
+        let filteredTshirts = searchedTshirts;
+
+        if (filters.size && filters.size.length > 0) {
+            filteredTshirts = filteredTshirts.filter(tshirt =>
+                tshirt.size.some(size => filters.size.includes(size))
+            );
+        }
+        if (filters.color && filters.color.length > 0) {
+            filteredTshirts = filteredTshirts.filter(tshirt =>
+                filters.color.some(color => tshirt.color.toLowerCase().includes(color.toLowerCase()))
+            );
+        }
+        if (filters.style && filters.style.length > 0) {
+            filteredTshirts = filteredTshirts.filter(tshirt =>
+                filters.style.some(style => tshirt.style.toLowerCase().includes(style.toLowerCase()))
+            );
         }
 
-        this.setState({ tshirts: sortedTshirts });
-    }
 
-    handleFilterChange = (newFilters) => {
-        this.setState({ filters: newFilters }, this.applyFilters);
-    }
+        console.log(filters);
+        console.log(filteredTshirts);
 
-    applyFilters = () => {
-        axios.get(`${SERVER_HOST}/tshirts`)
-            .then(res => {
-                if (res.data) {
-                    let filteredTshirts = res.data;
-                    const { sizes, colors, styles } = this.state.filters;
-
-                    if (sizes.length > 0) {
-                        filteredTshirts = filteredTshirts.filter(tshirt =>
-                            sizes.some(size => tshirt.size.includes(size))
-                        );
-                    }
-
-                    if (colors.length > 0) {
-                        filteredTshirts = filteredTshirts.filter(tshirt =>
-                            colors.map(color => color.toLowerCase()).includes(tshirt.color.toLowerCase()));
-                    }
-
-                    if (styles.length > 0) {
-                        filteredTshirts = filteredTshirts.filter(tshirt =>
-                            styles.map(style => style.toLowerCase()).includes(tshirt.style.toLowerCase()));
-                    }
-
-                    this.setState({ tshirts: filteredTshirts });
-                }
-            });
+        this.setState({ tshirts: filteredTshirts },   this.sortTshirts);
     }
 
 
+    sortTshirts = () => {
+        let { tshirts, sortOption } = this.state;
 
+        if (sortOption === 'price-low-high') {
+            tshirts.sort((a, b) => a.price - b.price);
+        } else if (sortOption === 'price-high-low') {
+            tshirts.sort((a, b) => b.price - a.price);
+        } else if (sortOption === 'brand') {
+            tshirts.sort((a, b) => a.brand.toLowerCase().localeCompare(b.brand.toLowerCase()));
+        }
+
+        this.setState({ tshirts });
+    }
 }

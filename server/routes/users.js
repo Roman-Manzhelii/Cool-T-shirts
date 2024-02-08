@@ -55,6 +55,7 @@ router.post(`/users/register/:name/:email/:password`, (req,res) =>
                 {
                     if(data)
                     {
+                        req.session.user = {email: data.email, accessLevel:data.accessLevel}
                         res.json({name: data.name, accessLevel:data.accessLevel})
                     }
                     else
@@ -78,6 +79,7 @@ router.post(`/users/login/:email/:password`, (req,res) =>
             {
                 if(result)
                 {
+                    req.session.user = {email: data.email, accessLevel:data.accessLevel}
                     res.json({name: data.name, accessLevel:data.accessLevel})
                 }
                 else
@@ -96,7 +98,8 @@ router.post(`/users/login/:email/:password`, (req,res) =>
 
 
 router.post(`/users/logout`, (req,res) => 
-{       
+{
+    req.session.destroy()
     res.json({})
 })
 

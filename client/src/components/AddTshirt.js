@@ -24,6 +24,7 @@ export default class AddTshirt extends Component
             country_of_manufacture: "",
             brand:"",
             price:"",
+            errorMessage: "",
             redirectToDisplayAllTshirts:sessionStorage.accessLevel < ACCESS_LEVEL_ADMIN
         }
     }
@@ -61,34 +62,43 @@ export default class AddTshirt extends Component
         }
 
         axios.post(`${SERVER_HOST}/tshirts`, tshirtObject)
-        .then(res => 
-        {   
+        .then(res =>
+        {
             if(res.data)
             {
                 if (res.data.errorMessage)
                 {
-                    console.log(res.data.errorMessage)    
+                    this.setState({errorMessage: "T-shirt details are incorrect. " + res.data.errorMessage})
+                    console.log(res.data.errorMessage)
                 }
                 else
-                {   
+                {
                     console.log("Record added")
                     this.setState({redirectToDisplayAllTshirts:true})
-                } 
+                }
             }
             else
             {
                 console.log("Record not added")
+                this.setState({errorMessage: "An unexpected error occurred."});
             }
         })
     }
 
 
     render()
-    {        
+    {
+        let errorMessageComponent = "";
+        if(this.state.errorMessage !== "")
+        {
+            errorMessageComponent = <div className="error"><br/>{this.state.errorMessage}</div>;
+        }
+
         return (
             <div className="form-container"> 
                 {this.state.redirectToDisplayAllTshirts ? <Redirect to="/DisplayAllTshirts"/> : null}
-                    
+
+
                 <Form>
                     <Form.Group controlId="style">
                         <Form.Label>Style</Form.Label>
@@ -134,6 +144,8 @@ export default class AddTshirt extends Component
             
                     <Link className="red-button" to={"/DisplayAllTshirts"}>Cancel</Link>
                 </Form>
+
+                {errorMessageComponent}
             </div>
         )
     }

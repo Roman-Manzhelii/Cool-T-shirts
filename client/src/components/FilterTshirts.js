@@ -4,10 +4,12 @@ export default class FilterTshirts extends Component {
         super(props)
         this.state = {
             sizes: {
+                XS: false,
                 S: false,
                 M: false,
                 L: false,
-                XL: false
+                XL: false,
+                XXL: false
             },
             colors: {
                 red: false,
@@ -31,9 +33,9 @@ export default class FilterTshirts extends Component {
             }
         }), () => {
             const filters = {
-                sizes: Object.keys(this.state.sizes).filter(key => this.state.sizes[key]),
-                colors: Object.keys(this.state.colors).filter(key => this.state.colors[key]),
-                styles: Object.keys(this.state.styles).filter(key => this.state.styles[key])
+                size: Object.keys(this.state.sizes).filter(key => this.state.sizes[key]),
+                color: Object.keys(this.state.colors).filter(key => this.state.colors[key]),
+                style: Object.keys(this.state.styles).filter(key => this.state.styles[key])
             };
             this.props.onFilterChange(filters);
         });
