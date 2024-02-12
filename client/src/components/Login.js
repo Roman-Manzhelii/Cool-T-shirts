@@ -3,7 +3,7 @@ import {Redirect, Link} from "react-router-dom"
 import axios from "axios"
 
 import LinkInClass from "../components/LinkInClass"
-import {ACCESS_LEVEL_GUEST, SERVER_HOST} from "../config/global_constants"
+import {SERVER_HOST} from "../config/global_constants"
 
 
 export default class Login extends Component
@@ -26,14 +26,11 @@ export default class Login extends Component
     }
     
     
-    handleSubmit = (e) => 
+    handleSubmit = () =>
     {
         axios.post(`${SERVER_HOST}/users/login/${this.state.email}/${this.state.password}`)
         .then(res => 
-        {     
-            // default if not logged in
-            sessionStorage.name = "GUEST"
-            sessionStorage.accessLevel = ACCESS_LEVEL_GUEST 
+        {
             if(res.data)
             {
                 if (res.data.errorMessage)
@@ -43,9 +40,10 @@ export default class Login extends Component
                 else // user successfully logged in
                 { 
                     console.log("User logged in")
-                    
-                    sessionStorage.name = res.data.name
-                    sessionStorage.accessLevel = res.data.accessLevel
+
+                    localStorage.name = res.data.name
+                    localStorage.accessLevel = res.data.accessLevel
+                    localStorage.token = res.data.token
                     
                     this.setState({isLoggedIn:true})
                 }        

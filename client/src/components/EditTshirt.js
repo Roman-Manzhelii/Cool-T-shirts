@@ -23,22 +23,21 @@ export default class EditTshirt extends Component
             brand: ``,
             price: ``,
             errorMessage: "",
-            redirectToDisplayAllTshirts:sessionStorage.accessLevel < ACCESS_LEVEL_NORMAL_USER
+            redirectToDisplayAllTshirts:localStorage.accessLevel < ACCESS_LEVEL_NORMAL_USER
         }
     }
 
     componentDidMount() 
     {      
         this.inputToFocus.focus()
-  
-        axios.get(`${SERVER_HOST}/tshirts/${this.props.match.params.id}`)
+        axios.get(`${SERVER_HOST}/tshirts/${this.props.match.params.id}`, {headers: {"authorization": localStorage.token}})
         .then(res => 
         {     
             if(res.data)
             {
                 if (res.data.errorMessage)
                 {
-                    this.setState({errorMessage: "T-shirt details are incorrect. " + res.data.errorMessage})
+                    this.setState({errorMessage: res.data.errorMessage})
                     console.log(res.data.errorMessage)    
                 }
                 else
@@ -89,15 +88,14 @@ export default class EditTshirt extends Component
             price: this.state.price
         };
 
-
-        axios.put(`${SERVER_HOST}/tshirts/${this.props.match.params.id}`, tshirtObject)
+        axios.put(`${SERVER_HOST}/tshirts/${this.props.match.params.id}`, tshirtObject, {headers: {"authorization": localStorage.token}})
         .then(res => 
         {             
             if(res.data)
             {
                 if (res.data.errorMessage)
                 {
-                    this.setState({errorMessage: "T-shirt details are incorrect. " + res.data.errorMessage})
+                    this.setState({errorMessage: res.data.errorMessage})
                     console.log(res.data.errorMessage)    
                 }
                 else

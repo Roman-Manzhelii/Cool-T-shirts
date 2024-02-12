@@ -32,7 +32,6 @@ export default class Register extends Component
     handleSubmit = (e) => 
     {
         e.preventDefault()
-
         axios.post(`${SERVER_HOST}/users/register/${this.state.name}/${this.state.email}/${this.state.password}`)
         .then(res => 
         {     
@@ -45,9 +44,10 @@ export default class Register extends Component
                 else // user successfully registered
                 { 
                     console.log("User registered and logged in")
-                    
-                    sessionStorage.name = res.data.name
-                    sessionStorage.accessLevel = res.data.accessLevel
+
+                    localStorage.name = res.data.name
+                    localStorage.accessLevel = res.data.accessLevel
+                    localStorage.token = res.data.token
                     
                     this.setState({isRegistered:true})
                 }        

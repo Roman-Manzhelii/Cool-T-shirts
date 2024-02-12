@@ -25,7 +25,7 @@ export default class AddTshirt extends Component
             brand:"",
             price:"",
             errorMessage: "",
-            redirectToDisplayAllTshirts:sessionStorage.accessLevel < ACCESS_LEVEL_ADMIN
+            redirectToDisplayAllTshirts:localStorage.accessLevel < ACCESS_LEVEL_ADMIN
         }
     }
 
@@ -60,15 +60,14 @@ export default class AddTshirt extends Component
             brand: this.state.brand,
             price: this.state.price
         }
-
-        axios.post(`${SERVER_HOST}/tshirts`, tshirtObject)
+        axios.post(`${SERVER_HOST}/tshirts`, tshirtObject, {headers: {"authorization": localStorage.token}})
         .then(res =>
         {
             if(res.data)
             {
                 if (res.data.errorMessage)
                 {
-                    this.setState({errorMessage: "T-shirt details are incorrect. " + res.data.errorMessage})
+                    this.setState({errorMessage: res.data.errorMessage})
                     console.log(res.data.errorMessage)
                 }
                 else

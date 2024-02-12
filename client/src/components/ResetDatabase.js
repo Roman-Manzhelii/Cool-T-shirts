@@ -38,6 +38,7 @@ export default class ResetDatabase extends Component
                 else // user successfully reset the User collection
                 { 
                     console.log("User collection reset")
+                    localStorage.clear()
                 }        
             }
             else
