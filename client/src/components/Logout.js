@@ -3,7 +3,7 @@ import {Redirect} from "react-router-dom"
 import axios from "axios"
 
 import LinkInClass from "../components/LinkInClass"
-import {ACCESS_LEVEL_GUEST, SERVER_HOST} from "../config/global_constants"
+import {SERVER_HOST} from "../config/global_constants"
 
 
 export default class Logout extends Component
@@ -21,7 +21,6 @@ export default class Logout extends Component
     handleSubmit = (e) => 
     {
         e.preventDefault()
-        
         axios.post(`${SERVER_HOST}/users/logout`)
         .then(res => 
         {     
@@ -34,10 +33,8 @@ export default class Logout extends Component
                 else
                 { 
                     console.log("User logged out")
-                    sessionStorage.clear() 
-                    
-                    sessionStorage.name = "GUEST"
-                    sessionStorage.accessLevel = ACCESS_LEVEL_GUEST
+                    localStorage.clear()
+
                     this.setState({isLoggedIn:false}) 
                 }
             }

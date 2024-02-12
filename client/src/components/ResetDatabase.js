@@ -16,13 +16,7 @@ export default class ResetDatabase extends Component
             isReset:false
         } 
     }
-    
-    
-    handleChange = (e) => 
-    {
-        this.setState({[e.target.name]: e.target.value})
-    }
-    
+
 
     resetUsersModel = () =>
     {
@@ -38,6 +32,7 @@ export default class ResetDatabase extends Component
                 else // user successfully reset the User collection
                 { 
                     console.log("User collection reset")
+                    localStorage.clear()
                 }        
             }
             else

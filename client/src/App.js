@@ -11,18 +11,20 @@ import Logout from "./components/Logout"
 import AddTshirt from "./components/AddTshirt"
 import EditTshirt from "./components/EditTshirt"
 import DeleteTshirt from "./components/DeleteTshirt"
-import DisplayAllCars from "./components/DisplayAllTshirts"
+import DisplayAllTshirts from "./components/DisplayAllTshirts";
 import LoggedInRoute from "./components/LoggedInRoute"
 
 
 import {ACCESS_LEVEL_GUEST} from "./config/global_constants"
-import DisplayAllTshirts from "./components/DisplayAllTshirts";
 
 
-if (typeof sessionStorage.accessLevel === "undefined")
+
+if (typeof localStorage.accessLevel === "undefined")
 {
-    sessionStorage.name = "GUEST"
-    sessionStorage.accessLevel = ACCESS_LEVEL_GUEST
+    localStorage.name = "GUEST"
+    localStorage.accessLevel = ACCESS_LEVEL_GUEST
+    localStorage.token = null
+    localStorage.profilePhoto = null
 }
 
     
@@ -43,7 +45,7 @@ export default class App extends Component
                     <LoggedInRoute exact path="/EditTshirt/:id" component={EditTshirt} />
                     <LoggedInRoute exact path="/DeleteTshirt/:id" component={DeleteTshirt} />
                     <Route exact path="/DisplayAllTshirts" component={DisplayAllTshirts}/>
-                    <Route path="*" component={DisplayAllCars}/>                            
+                    <Route path="*" component={DisplayAllTshirts}/>
                 </Switch>
             </BrowserRouter>
 

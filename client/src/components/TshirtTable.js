@@ -14,6 +14,7 @@ export default class TshirtTable extends Component
                         <th>Color</th>
                         <th>Brand</th>
                         <th>Price</th>
+                        <th>Photos</th>
                         <th> </th>
                     </tr>
                 </thead>

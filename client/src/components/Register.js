@@ -17,7 +17,8 @@ export default class Register extends Component
             name:"",
             email:"",
             password:"",
-            confirmPassword:"",    
+            confirmPassword:"",
+            selectedFile:null,
             isRegistered:false
         } 
     }
@@ -27,13 +28,20 @@ export default class Register extends Component
     {
         this.setState({[e.target.name]: e.target.value})
     }
-    
+
+    handleFileChange = (e) =>
+    {
+        this.setState({selectedFile: e.target.files[0]})
+    }
     
     handleSubmit = (e) => 
     {
         e.preventDefault()
 
-        axios.post(`${SERVER_HOST}/users/register/${this.state.name}/${this.state.email}/${this.state.password}`)
+        let formData = new FormData()
+        formData.append("profilePhoto", this.state.selectedFile)
+
+        axios.post(`${SERVER_HOST}/users/register/${this.state.name}/${this.state.email}/${this.state.password}`, formData, {headers: {"Content-type": "multipart/form-data"}})
         .then(res => 
         {     
             if(res.data)
@@ -45,10 +53,12 @@ export default class Register extends Component
                 else // user successfully registered
                 { 
                     console.log("User registered and logged in")
-                    
-                    sessionStorage.name = res.data.name
-                    sessionStorage.accessLevel = res.data.accessLevel
-                    
+
+                    localStorage.name = res.data.name
+                    localStorage.accessLevel = res.data.accessLevel
+                    localStorage.token = res.data.token
+                    localStorage.profilePhoto = res.data.profilePhoto
+
                     this.setState({isRegistered:true})
                 }        
             }
@@ -105,6 +115,11 @@ export default class Register extends Component
                     autoComplete="confirmPassword"
                     value = {this.state.confirmPassword}
                     onChange = {this.handleChange}
+                /><br/>
+
+                <input
+                    type = "file"
+                    onChange = {this.handleFileChange}
                 /><br/><br/>
                 <div className="nav-item">
                 <LinkInClass value="Register New User" className="green-button" onClick={this.handleSubmit} />

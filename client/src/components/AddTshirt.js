@@ -20,12 +20,12 @@ export default class AddTshirt extends Component
             color:"",
             size: [],
             materials: [],
-            photo: [],
             country_of_manufacture: "",
             brand:"",
             price:"",
+            selectedFiles: null,
             errorMessage: "",
-            redirectToDisplayAllTshirts:sessionStorage.accessLevel < ACCESS_LEVEL_ADMIN
+            redirectToDisplayAllTshirts:localStorage.accessLevel < ACCESS_LEVEL_ADMIN
         }
     }
 
@@ -38,37 +38,51 @@ export default class AddTshirt extends Component
  
     handleChange = (e) => 
     {
-        if(e.target.name === "size" || e.target.name === "materials" || e.target.name === "photo") {
+        if(e.target.name === "size" || e.target.name === "materials") {
             this.setState({[e.target.name]: e.target.value.split(',')});
         } else {
             this.setState({[e.target.name]: e.target.value});
         }
     }
 
+    handleFileChange = (e) =>
+    {
+        this.setState({selectedFiles: e.target.files})
+    }
 
     handleSubmit = (e) => 
     {
         e.preventDefault()
 
-        const tshirtObject = {
-            style: this.state.style,
-            color: this.state.color,
-            size: this.state.size.map(item => item.trim()),
-            materials: this.state.materials.map(item => item.trim()),
-            photo: this.state.photo.map(item => item.trim()),
-            country_of_manufacture: this.state.country_of_manufacture,
-            brand: this.state.brand,
-            price: this.state.price
+        let formData = new FormData()
+        formData.append("style", this.state.style)
+        formData.append("color", this.state.color)
+        this.state.size.forEach((size, index) => {
+            formData.append(`size[${index}]`, size.trim());
+        });
+        this.state.materials.forEach((material, index) => {
+            formData.append(`materials[${index}]`, material.trim());
+        });
+        formData.append("country_of_manufacture",  this.state.country_of_manufacture)
+        formData.append("brand",  this.state.brand)
+        formData.append("price",  this.state.price)
+
+        if(this.state.selectedFiles)
+        {
+            for(let i = 0; i < this.state.selectedFiles.length; i++)
+            {
+                formData.append("tshirtPhotos", this.state.selectedFiles[i])
+            }
         }
 
-        axios.post(`${SERVER_HOST}/tshirts`, tshirtObject)
+        axios.post(`${SERVER_HOST}/tshirts`, formData, {headers: {"authorization": localStorage.token, "Content-type": "multipart/form-data"}})
         .then(res =>
         {
             if(res.data)
             {
                 if (res.data.errorMessage)
                 {
-                    this.setState({errorMessage: "T-shirt details are incorrect. " + res.data.errorMessage})
+                    this.setState({errorMessage: res.data.errorMessage})
                     console.log(res.data.errorMessage)
                 }
                 else
@@ -120,11 +134,6 @@ export default class AddTshirt extends Component
                         <Form.Control type="text" name="materials" value={this.state.materials.join(',')} onChange={this.handleChange} />
                     </Form.Group>
 
-                    <Form.Group controlId="photo">
-                        <Form.Label>Photo</Form.Label>
-                        <Form.Control type="text" name="photo" value={this.state.photo.join(',')} onChange={this.handleChange} />
-                    </Form.Group>
-
                     <Form.Group controlId="country-of-manufacture">
                         <Form.Label>Country of manufacture</Form.Label>
                         <Form.Control type="text" name="country_of_manufacture" value={this.state.country_of_manufacture} onChange={this.handleChange} />
@@ -138,7 +147,12 @@ export default class AddTshirt extends Component
                     <Form.Group controlId="price">
                         <Form.Label>Price</Form.Label>
                         <Form.Control type="text" name="price" value={this.state.price} onChange={this.handleChange} />
-                    </Form.Group> 
+                    </Form.Group>
+
+                    <Form.Group controlId="photos">
+                        <Form.Label>Photos</Form.Label>
+                        <Form.Control type = "file" multiple onChange = {this.handleFileChange}/>
+                    </Form.Group> <br/><br/>
             
                     <LinkInClass value="Add" className="addbutton" onClick={this.handleSubmit}/>
             

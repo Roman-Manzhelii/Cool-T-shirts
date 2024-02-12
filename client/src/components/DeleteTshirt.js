@@ -18,8 +18,8 @@ export default class DeleteTshirt extends Component
     
     
     componentDidMount() 
-    {   
-        axios.delete(`${SERVER_HOST}/tshirts/${this.props.match.params.id}`)
+    {
+        axios.delete(`${SERVER_HOST}/tshirts/${this.props.match.params.id}`, {headers: {"authorization": localStorage.token}})
         .then(res => 
         {
             if(res.data)

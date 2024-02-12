@@ -18,27 +18,25 @@ export default class EditTshirt extends Component
             color: ``,
             size: [],
             materials: [],
-            photo: [],
             country_of_manufacture: ``,
             brand: ``,
             price: ``,
             errorMessage: "",
-            redirectToDisplayAllTshirts:sessionStorage.accessLevel < ACCESS_LEVEL_NORMAL_USER
+            redirectToDisplayAllTshirts:localStorage.accessLevel < ACCESS_LEVEL_NORMAL_USER
         }
     }
 
     componentDidMount() 
     {      
         this.inputToFocus.focus()
-  
-        axios.get(`${SERVER_HOST}/tshirts/${this.props.match.params.id}`)
+        axios.get(`${SERVER_HOST}/tshirts/${this.props.match.params.id}`, {headers: {"authorization": localStorage.token}})
         .then(res => 
         {     
             if(res.data)
             {
                 if (res.data.errorMessage)
                 {
-                    this.setState({errorMessage: "T-shirt details are incorrect. " + res.data.errorMessage})
+                    this.setState({errorMessage: res.data.errorMessage})
                     console.log(res.data.errorMessage)    
                 }
                 else
@@ -48,7 +46,6 @@ export default class EditTshirt extends Component
                         color: res.data.color,
                         size: res.data.size,
                         materials: res.data.materials,
-                        photo: res.data.photo,
                         country_of_manufacture: res.data.country_of_manufacture,
                         brand: res.data.brand,
                         price: res.data.price
@@ -66,7 +63,7 @@ export default class EditTshirt extends Component
 
     handleChange = (e) => 
     {
-        if(e.target.name === "size" || e.target.name === "materials" || e.target.name === "photo") {
+        if(e.target.name === "size" || e.target.name === "materials") {
             this.setState({[e.target.name]: e.target.value.split(',')});
         } else {
             this.setState({[e.target.name]: e.target.value});
@@ -83,21 +80,19 @@ export default class EditTshirt extends Component
             color: this.state.color,
             size: this.state.size.map(item => item.trim()),
             materials: this.state.materials.map(item => item.trim()),
-            photo: this.state.photo.map(item => item.trim()),
             country_of_manufacture: this.state.country_of_manufacture,
             brand: this.state.brand,
             price: this.state.price
         };
 
-
-        axios.put(`${SERVER_HOST}/tshirts/${this.props.match.params.id}`, tshirtObject)
+        axios.put(`${SERVER_HOST}/tshirts/${this.props.match.params.id}`, tshirtObject, {headers: {"authorization": localStorage.token}})
         .then(res => 
         {             
             if(res.data)
             {
                 if (res.data.errorMessage)
                 {
-                    this.setState({errorMessage: "T-shirt details are incorrect. " + res.data.errorMessage})
+                    this.setState({errorMessage: res.data.errorMessage})
                     console.log(res.data.errorMessage)    
                 }
                 else
@@ -147,11 +142,6 @@ export default class EditTshirt extends Component
                     <Form.Group controlId="materials">
                         <Form.Label>Materials</Form.Label>
                         <Form.Control type="text" name="materials" value={this.state.materials.join(',')} onChange={this.handleChange} />
-                    </Form.Group>
-
-                    <Form.Group controlId="photo">
-                        <Form.Label>Photo</Form.Label>
-                        <Form.Control type="text" name="photo" value={this.state.photo.join(',')} onChange={this.handleChange} />
                     </Form.Group>
 
                     <Form.Group controlId="country-of-manufacture">

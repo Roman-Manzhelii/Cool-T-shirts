@@ -10,7 +10,6 @@ import SortTshirts from "./SortTshirts";
 import FilterTshirts from './FilterTshirts';
 import SearchTshirts from "./SearchTshirts";
 
-
 export default class DisplayAllTshirts extends Component {
     constructor(props) {
         super(props);
@@ -32,14 +31,23 @@ export default class DisplayAllTshirts extends Component {
     componentDidMount() {
         axios.get(`${SERVER_HOST}/tshirts`)
             .then(res => {
-                if (res.data) {
-                    this.setState({ originalTshirts: res.data, searchedTshirts: res.data, tshirts: res.data });
-                    console.log(res);
-                } else {
-                    console.log("No data found");
+                if(res.data)
+                {
+                    if (res.data.errorMessage)
+                    {
+                        console.log(res.data.errorMessage)
+                    }
+                    else
+                    {
+                        this.setState({ originalTshirts: res.data, searchedTshirts: res.data, tshirts: res.data });
+                        console.log(res);
+                    }
                 }
+                    else
+                    {
+                    console.log("No data found");
+                    }
             })
-            .catch(error => console.log(error));
     }
 
 
@@ -48,8 +56,14 @@ export default class DisplayAllTshirts extends Component {
     {
         return (
             <div className="form-container">
-                {sessionStorage.accessLevel > ACCESS_LEVEL_GUEST ?
+                {
+                    localStorage.accessLevel > ACCESS_LEVEL_GUEST ?
                     <div className="logout">
+                        {
+                            localStorage.profilePhoto !== "null"
+                                ? <img id="profilePhoto" src={`data:;base64,${localStorage.profilePhoto}`} alt=""/>
+                                : null
+                        }
                         <Logout/>
                     </div>
                 :
@@ -68,7 +82,7 @@ export default class DisplayAllTshirts extends Component {
                 <div className="table-container">
                     <TshirtTable tshirts={this.state.tshirts} />
 
-                    {sessionStorage.accessLevel >= ACCESS_LEVEL_ADMIN ?
+                    {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN ?
                         <div className="add-new-tshirt">
                             <Link className="blue-button" to={"/AddTshirt"}>Add New T-shirt</Link>
                         </div>
