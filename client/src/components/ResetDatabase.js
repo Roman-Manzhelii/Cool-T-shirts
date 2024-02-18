@@ -21,27 +21,14 @@ export default class ResetDatabase extends Component
     resetUsersModel = () =>
     {
         axios.post(`${SERVER_HOST}/users/reset_user_collection`)
-        .then(res => 
-        {     
-            if(res.data)
+            .then(() =>
             {
-                if (res.data.errorMessage)
-                {
-                    console.log(res.data.errorMessage)    
-                }
-                else // user successfully reset the User collection
-                { 
-                    console.log("User collection reset")
-                    localStorage.clear()
-                }        
-            }
-            else
-            {
-                console.log("Failed to reset User collection")
-            }
-            
-            this.setState({isReset:true})
-        })   
+                console.log("User collection reset")
+                localStorage.clear()
+
+                this.setState({isReset:true})
+            })
+            .catch(error => console.log(error))
     }
 
 

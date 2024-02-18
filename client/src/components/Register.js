@@ -19,7 +19,9 @@ export default class Register extends Component
             password:"",
             confirmPassword:"",
             selectedFile:null,
-            isRegistered:false
+            errorMessage: "",
+            isRegistered:false,
+            wasSubmittedAtLeastOnce:false
         } 
     }
     
@@ -33,45 +35,78 @@ export default class Register extends Component
     {
         this.setState({selectedFile: e.target.files[0]})
     }
-    
-    handleSubmit = (e) => 
-    {
-        e.preventDefault()
+
+    validateName = (name) => {
+        return name !== "";
+    }
+
+    validateEmail = (email) => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+
+    validatePassword = (password) => {
+        const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[!#€$%^&*]).{6,20}$/;
+        return passwordRegex.test(password);
+    }
+
+    validateConfirmPassword = (password, confirmPassword) => {
+        return password === confirmPassword;
+    }
+
+    handleSubmit = (e) => {
+        e.preventDefault();
+
+        const { name, email, password, confirmPassword } = this.state;
+
+        if (!this.validateName(name)) {
+            this.setState({errorMessage: "Name is required", wasSubmittedAtLeastOnce: true });
+            return;
+        }
+
+        if (!this.validateEmail(email)) {
+            this.setState({errorMessage: "Email must have the structure ***@***.***", wasSubmittedAtLeastOnce: true });
+            return;
+        }
+
+        if (!this.validatePassword(password)) {
+            this.setState({errorMessage: "Password requires a number, special character (!#€$%^&*), lowercase and uppercase letter. The password requires a minimum of 6 characters, a maximum of 20", wasSubmittedAtLeastOnce: true });
+            return;
+        }
+
+        if (!this.validateConfirmPassword(password, confirmPassword)) {
+            this.setState({errorMessage: "Passwords do not match", wasSubmittedAtLeastOnce: true });
+            return;
+        }
 
         let formData = new FormData()
         formData.append("profilePhoto", this.state.selectedFile)
 
         axios.post(`${SERVER_HOST}/users/register/${this.state.name}/${this.state.email}/${this.state.password}`, formData, {headers: {"Content-type": "multipart/form-data"}})
         .then(res => 
-        {     
-            if(res.data)
-            {
-                if (res.data.errorMessage)
-                {
-                    console.log(res.data.errorMessage)    
-                }
-                else // user successfully registered
-                { 
-                    console.log("User registered and logged in")
-
+        {
                     localStorage.name = res.data.name
                     localStorage.accessLevel = res.data.accessLevel
                     localStorage.token = res.data.token
                     localStorage.profilePhoto = res.data.profilePhoto
 
                     this.setState({isRegistered:true})
-                }        
-            }
-            else
-            {
-                console.log("Registration failed")
-            }
-        })   
+        })
+            .catch (err => {
+        const errorMessage = err.response && err.response.data.errorMessage
+            ? err.response.data.errorMessage : "An unexpected error occurred.";
+        this.setState({ errorMessage: errorMessage, wasSubmittedAtLeastOnce: true });
+    })
     }
 
 
     render() 
-    {     
+    {
+        let errorMessage = "";
+        if(this.state.wasSubmittedAtLeastOnce)
+        {
+            errorMessage = <div className="error">{this.state.errorMessage}<br/></div>;
+        }
         return (
             <form className="form-container" noValidate = {true} id = "loginOrRegistrationForm" onSubmit={this.handleSubmit}>
            
@@ -125,6 +160,7 @@ export default class Register extends Component
                 <LinkInClass value="Register New User" className="green-button" onClick={this.handleSubmit} />
                 <Link className="red-button" to={"/DisplayAllTshirts"}>Cancel</Link>
                     </div>
+                {errorMessage}
             </form>
         )
     }

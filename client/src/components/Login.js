@@ -15,7 +15,9 @@ export default class Login extends Component
         this.state = {
             email:"",
             password:"",
-            isLoggedIn:false
+            errorMessage: "",
+            isLoggedIn:false,
+            wasSubmittedAtLeastOnce:false
         }
     }
     
@@ -31,34 +33,28 @@ export default class Login extends Component
         axios.post(`${SERVER_HOST}/users/login/${this.state.email}/${this.state.password}`)
         .then(res => 
         {
-            if(res.data)
-            {
-                if (res.data.errorMessage)
-                {
-                    console.log(res.data.errorMessage)    
-                }
-                else // user successfully logged in
-                { 
-                    console.log("User logged in")
-
                     localStorage.name = res.data.name
                     localStorage.accessLevel = res.data.accessLevel
                     localStorage.token = res.data.token
                     localStorage.profilePhoto = res.data.profilePhoto
 
-                    this.setState({isLoggedIn:true})
-                }        
-            }
-            else
-            {
-                console.log("Login failed")
-            }
-        })                
+                    this.setState({isLoggedIn: true})
+        })
+            .catch(err => {
+                const errorMessage = err.response && err.response.data.errorMessage
+                    ? err.response.data.errorMessage : "An unexpected error occurred.";
+                this.setState({ errorMessage: errorMessage, wasSubmittedAtLeastOnce: true });
+            })
     }
 
 
     render()
-    {            
+    {
+        let errorMessage = "";
+        if(this.state.wasSubmittedAtLeastOnce)
+        {
+            errorMessage = <div className="error">Login Details are incorrect. {this.state.errorMessage} <br/></div>;
+        }
         return (
             <form className="form-container" noValidate = {true} id = "loginOrRegistrationForm">
                 <h2>Login</h2>
@@ -87,6 +83,7 @@ export default class Login extends Component
                 <LinkInClass value="Login" className="green-button" onClick={this.handleSubmit}/> 
                 <Link className="red-button" to={"/DisplayAllTshirts"}>Cancel</Link>
                 </div>
+                {errorMessage}
             </form>
         )
     }

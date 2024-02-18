@@ -22,7 +22,8 @@ export default class EditTshirt extends Component
             brand: ``,
             price: ``,
             errorMessage: "",
-            redirectToDisplayAllTshirts:localStorage.accessLevel < ACCESS_LEVEL_NORMAL_USER
+            redirectToDisplayAllTshirts:localStorage.accessLevel < ACCESS_LEVEL_NORMAL_USER,
+            wasSubmittedAtLeastOnce:false
         }
     }
 
@@ -31,16 +32,7 @@ export default class EditTshirt extends Component
         this.inputToFocus.focus()
         axios.get(`${SERVER_HOST}/tshirts/${this.props.match.params.id}`, {headers: {"authorization": localStorage.token}})
         .then(res => 
-        {     
-            if(res.data)
-            {
-                if (res.data.errorMessage)
-                {
-                    this.setState({errorMessage: res.data.errorMessage})
-                    console.log(res.data.errorMessage)    
-                }
-                else
-                { 
+        {
                     this.setState({
                         style: res.data.style,
                         color: res.data.color,
@@ -50,14 +42,8 @@ export default class EditTshirt extends Component
                         brand: res.data.brand,
                         price: res.data.price
                     })
-                }
-            }
-            else
-            {
-                this.setState({errorMessage: "An unexpected error occurred."});
-                console.log(`Record not found`)
-            }
         })
+            .catch(error => console.log(error));
     }
 
 
@@ -86,36 +72,24 @@ export default class EditTshirt extends Component
         };
 
         axios.put(`${SERVER_HOST}/tshirts/${this.props.match.params.id}`, tshirtObject, {headers: {"authorization": localStorage.token}})
-        .then(res => 
-        {             
-            if(res.data)
-            {
-                if (res.data.errorMessage)
-                {
-                    this.setState({errorMessage: res.data.errorMessage})
-                    console.log(res.data.errorMessage)    
-                }
-                else
-                {      
-                    console.log(`Record updated`)
-                    this.setState({redirectToDisplayAllTshirts:true})
-                }
-            }
-            else
-            {
-                this.setState({errorMessage: "An unexpected error occurred."});
-                console.log(`Record not updated`)
-            }
+        .then(() =>
+        {
+            this.setState({ redirectToDisplayAllTshirts: true });
         })
+            .catch(err => {
+            const errorMessage = err.response && err.response.data.errorMessage
+                ? err.response.data.errorMessage : "An unexpected error occurred.";
+            this.setState({ errorMessage: errorMessage, wasSubmittedAtLeastOnce: true });
+        });
     }
 
 
     render() 
     {
-        let errorMessageComponent = "";
-        if(this.state.errorMessage !== "")
+        let errorMessage = "";
+        if(this.state.wasSubmittedAtLeastOnce)
         {
-            errorMessageComponent = <div className="error"><br/>{this.state.errorMessage}</div>;
+            errorMessage = <div className="error"><br/>{this.state.errorMessage}</div>;
         }
 
         return (
@@ -164,7 +138,7 @@ export default class EditTshirt extends Component
                     <Link className="red-button" to={"/DisplayAllTshirts"}>Cancel</Link>
                 </Form>
 
-                {errorMessageComponent}
+                {errorMessage}
             </div>
         )
     }

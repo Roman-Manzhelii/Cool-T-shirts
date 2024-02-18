@@ -23,26 +23,11 @@ export default class Logout extends Component
         e.preventDefault()
         axios.post(`${SERVER_HOST}/users/logout`)
         .then(res => 
-        {     
-            if(res.data)
-            {
-                if (res.data.errorMessage)
-                {
-                    console.log(res.data.errorMessage)    
-                }
-                else
-                { 
-                    console.log("User logged out")
+        {
                     localStorage.clear()
-
-                    this.setState({isLoggedIn:false}) 
-                }
-            }
-            else
-            {
-                console.log("Logout failed")
-            }
-        }) 
+                    this.setState({isLoggedIn:false})
+        })
+            .catch(error => console.log(error));
     }
 
 

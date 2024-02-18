@@ -8,31 +8,19 @@ import {ACCESS_LEVEL_GUEST, ACCESS_LEVEL_ADMIN, SERVER_HOST} from "../config/glo
 
 export default class TshirtTableRow extends Component
 {
-    componentDidMount()
-    {
-        this.props.tshirt.photos.map(photo =>
-        {
-            return axios.get(`${SERVER_HOST}/tshirts/photo/${photo.filename}`)
-                .then(res =>
-                {
-                    if(res.data)
-                    {
-                        if (res.data.errorMessage)
-                        {
-                            console.log(res.data.errorMessage)
-                        }
-                        else
-                        {
-                            document.getElementById(photo._id).src = `data:;base64,${res.data.image}`
-                        }
+    componentDidMount() {
+        this.props.tshirt.photos.forEach(photo => {
+            axios.get(`${SERVER_HOST}/tshirts/photo/${photo.filename}`).then(res => {
+                if (res.data && res.data.image) {
+                    const imgElement = document.getElementById(photo._id);
+                    if (imgElement) {
+                        imgElement.src = `data:;base64,${res.data.image}`;
                     }
-                    else
-                    {
-                        console.log("Record not found")
-                    }
-                })
-        })
+                }
+            }).catch(error => console.log(error));
+        });
     }
+
     render() 
     {
         return (

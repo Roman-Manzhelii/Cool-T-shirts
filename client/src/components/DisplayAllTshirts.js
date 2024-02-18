@@ -2,6 +2,7 @@ import React, {Component} from "react"
 import {Link} from "react-router-dom"
 
 import axios from "axios"
+
 import TshirtTable from "./TshirtTable"
 import Logout from "./Logout"
 
@@ -27,27 +28,14 @@ export default class DisplayAllTshirts extends Component {
         };
     }
 
-
-    componentDidMount() {
+    componentDidMount()
+    {
         axios.get(`${SERVER_HOST}/tshirts`)
-            .then(res => {
-                if(res.data)
-                {
-                    if (res.data.errorMessage)
-                    {
-                        console.log(res.data.errorMessage)
-                    }
-                    else
-                    {
-                        this.setState({ originalTshirts: res.data, searchedTshirts: res.data, tshirts: res.data });
-                        console.log(res);
-                    }
-                }
-                    else
-                    {
-                    console.log("No data found");
-                    }
+            .then(res =>
+            {
+                this.setState({ originalTshirts: res.data, searchedTshirts: res.data, tshirts: res.data })
             })
+            .catch(error => console.log(error));
     }
 
 
@@ -109,15 +97,12 @@ export default class DisplayAllTshirts extends Component {
     searchTshirts = () => {
         let { originalTshirts, searchQuery} = this.state;
 
-        // Спочатку виконуємо пошук
         let searchFilteredTshirts = searchQuery.trim() ? originalTshirts.filter(tshirt =>
             tshirt.brand.toLowerCase().includes(searchQuery.toLowerCase()) ||
             tshirt.color.toLowerCase().includes(searchQuery.toLowerCase()) ||
             tshirt.country_of_manufacture.toLowerCase().includes(searchQuery.toLowerCase())
         ) : [...originalTshirts];
 
-
-        // Оновлення стану з результатами, що вже відфільтровані та відповідають пошуковому запиту
         this.setState({ tshirts: searchFilteredTshirts, searchedTshirts: searchFilteredTshirts }, this.filterTshirts);
         console.log("Search", searchFilteredTshirts);
     };

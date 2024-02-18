@@ -25,7 +25,8 @@ export default class AddTshirt extends Component
             price:"",
             selectedFiles: null,
             errorMessage: "",
-            redirectToDisplayAllTshirts:localStorage.accessLevel < ACCESS_LEVEL_ADMIN
+            redirectToDisplayAllTshirts:localStorage.accessLevel < ACCESS_LEVEL_ADMIN,
+            wasSubmittedAtLeastOnce:false
         }
     }
 
@@ -50,7 +51,7 @@ export default class AddTshirt extends Component
         this.setState({selectedFiles: e.target.files})
     }
 
-    handleSubmit = (e) => 
+    handleSubmit = (e) =>
     {
         e.preventDefault()
 
@@ -75,37 +76,29 @@ export default class AddTshirt extends Component
             }
         }
 
-        axios.post(`${SERVER_HOST}/tshirts`, formData, {headers: {"authorization": localStorage.token, "Content-type": "multipart/form-data"}})
-        .then(res =>
-        {
-            if(res.data)
-            {
-                if (res.data.errorMessage)
-                {
-                    this.setState({errorMessage: res.data.errorMessage})
-                    console.log(res.data.errorMessage)
-                }
-                else
-                {
-                    console.log("Record added")
-                    this.setState({redirectToDisplayAllTshirts:true})
-                }
+        axios.post(`${SERVER_HOST}/tshirts`, formData, {
+            headers: { "authorization": localStorage.token, "Content-Type": "multipart/form-data" }})
+            .then(res => {
+            if (res.data.errorMessage) {
+                this.setState({ errorMessage: res.data.errorMessage, wasSubmittedAtLeastOnce: true });
+            } else {
+                this.setState({ redirectToDisplayAllTshirts: true });
             }
-            else
-            {
-                console.log("Record not added")
-                this.setState({errorMessage: "An unexpected error occurred."});
-            }
-        })
+        }).catch(err => {
+            // Handle other errors or set a general error message
+            const errorMessage = err.response && err.response.data.errorMessage
+                ? err.response.data.errorMessage : "An unexpected error occurred.";
+            this.setState({ errorMessage: errorMessage, wasSubmittedAtLeastOnce: true });
+        });
     }
 
 
     render()
     {
-        let errorMessageComponent = "";
-        if(this.state.errorMessage !== "")
+        let errorMessage = "";
+        if(this.state.wasSubmittedAtLeastOnce)
         {
-            errorMessageComponent = <div className="error"><br/>{this.state.errorMessage}</div>;
+            errorMessage = <div className="error"><br/>{this.state.errorMessage}</div>;
         }
 
         return (
@@ -151,7 +144,7 @@ export default class AddTshirt extends Component
 
                     <Form.Group controlId="photos">
                         <Form.Label>Photos</Form.Label>
-                        <Form.Control type = "file" multiple onChange = {this.handleFileChange}/>
+                        <Form.Control type = "file" name="tshirtPhotos" multiple onChange = {this.handleFileChange}/>
                     </Form.Group> <br/><br/>
             
                     <LinkInClass value="Add" className="addbutton" onClick={this.handleSubmit}/>
@@ -159,7 +152,7 @@ export default class AddTshirt extends Component
                     <Link className="red-button" to={"/DisplayAllTshirts"}>Cancel</Link>
                 </Form>
 
-                {errorMessageComponent}
+                {errorMessage}
             </div>
         )
     }
