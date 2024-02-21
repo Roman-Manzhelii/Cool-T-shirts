@@ -1,8 +1,8 @@
-import React, {Component} from "react";
+import React, {Component} from "react"
 
 export default class SearchTshirts extends Component {
     handleSearch = (e) => {
-        this.props.onSearch(e.target.value);
+        this.props.onSearch(e.target.value)
     }
 
     render() {
@@ -14,6 +14,6 @@ export default class SearchTshirts extends Component {
                     onChange={this.handleSearch}
                 />
             </div>
-        );
+        )
     }
 }

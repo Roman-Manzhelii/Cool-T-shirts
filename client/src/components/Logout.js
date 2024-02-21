@@ -6,39 +6,34 @@ import LinkInClass from "../components/LinkInClass"
 import {SERVER_HOST} from "../config/global_constants"
 
 
-export default class Logout extends Component
-{
-    constructor(props)
-    {
+export default class Logout extends Component {
+    constructor(props) {
         super(props)
-        
+
         this.state = {
-            isLoggedIn:true
+            isLoggedIn: true
         }
     }
-    
-    
-    handleSubmit = (e) => 
-    {
+
+
+    handleSubmit = (e) => {
         e.preventDefault()
         axios.post(`${SERVER_HOST}/users/logout`)
-        .then(res => 
-        {
-                    localStorage.clear()
-                    this.setState({isLoggedIn:false})
-        })
-            .catch(error => console.log(error));
+            .then(res => {
+                localStorage.clear()
+                this.setState({isLoggedIn: false})
+            })
+            .catch(error => console.log(error))
     }
 
 
-    render()
-    {
+    render() {
         return (
             <div className="nav-item">
-        
+
                 {!this.state.isLoggedIn ? <Redirect to="/DisplayAllTshirts"/> : null}
-                  
-                <LinkInClass value="Log out" className="red-button" onClick={this.handleSubmit}/> 
+
+                <LinkInClass value="Log out" className="red-button" onClick={this.handleSubmit}/>
             </div>
         )
     }
