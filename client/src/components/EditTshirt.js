@@ -21,6 +21,8 @@ export default class EditTshirt extends Component
             country_of_manufacture: ``,
             brand: ``,
             price: ``,
+            photos: ``,
+            selectedFiles: null,
             errorMessage: "",
             redirectToDisplayAllTshirts:localStorage.accessLevel < ACCESS_LEVEL_NORMAL_USER,
             wasSubmittedAtLeastOnce:false
@@ -40,10 +42,29 @@ export default class EditTshirt extends Component
                         materials: res.data.materials,
                         country_of_manufacture: res.data.country_of_manufacture,
                         brand: res.data.brand,
-                        price: res.data.price
+                        price: res.data.price,
+                        photos: res.data.photos
                     })
+            this.loadImages(res.data.photos);
         })
             .catch(error => console.log(error));
+    }
+
+    loadImages(photos) {
+        photos.forEach(photo => {
+            axios.get(`${SERVER_HOST}/tshirts/photo/${photo.filename}`)
+                .then(res => {
+                    if (res.data && res.data.image) {
+                        // Оновлення стану для кожного зображення
+                        this.setState(prevState => ({
+                            photos: prevState.photos.map(p =>
+                                p.filename === photo.filename ? {...p, src: `data:image/jpeg;base64,${res.data.image}`} : p
+                            )
+                        }));
+                    }
+                })
+                .catch(error => console.log(error));
+        });
     }
 
 
@@ -56,32 +77,66 @@ export default class EditTshirt extends Component
         }
     }
 
-
-    handleSubmit = (e) => 
+    handleFileChange = (e) =>
     {
-        e.preventDefault()
-
-        const tshirtObject = {
-            style: this.state.style,
-            color: this.state.color,
-            size: this.state.size.map(item => item.trim()),
-            materials: this.state.materials.map(item => item.trim()),
-            country_of_manufacture: this.state.country_of_manufacture,
-            brand: this.state.brand,
-            price: this.state.price
-        };
-
-        axios.put(`${SERVER_HOST}/tshirts/${this.props.match.params.id}`, tshirtObject, {headers: {"authorization": localStorage.token}})
-        .then(() =>
-        {
-            this.setState({ redirectToDisplayAllTshirts: true });
-        })
-            .catch(err => {
-            const errorMessage = err.response && err.response.data.errorMessage
-                ? err.response.data.errorMessage : "An unexpected error occurred.";
-            this.setState({ errorMessage: errorMessage, wasSubmittedAtLeastOnce: true });
-        });
+        this.setState({selectedFiles: e.target.files})
     }
+
+    handleDeletePhoto = (tshirtId, photoId) => {
+        this.setState(prevState => ({
+            photos: prevState.photos.filter(photo => photo._id !== photoId)
+        }));
+
+        axios.delete(`${SERVER_HOST}/tshirts/${tshirtId}/photos/${photoId}`, {headers: {"authorization": localStorage.token}})
+            .then(res => {
+                console.log('Photo deleted successfully');
+            })
+            .catch(err => {
+                console.error('Error deleting photo', err);
+            });
+    };
+
+
+
+    handleSubmit = (e) => {
+        e.preventDefault();
+
+        let formData = new FormData();
+        formData.append("style", this.state.style);
+        formData.append("color", this.state.color);
+        this.state.size.forEach((size, index) => {
+            formData.append(`size[${index}]`, size.trim());
+        });
+        this.state.materials.forEach((material, index) => {
+            formData.append(`materials[${index}]`, material.trim());
+        });
+        formData.append("country_of_manufacture", this.state.country_of_manufacture);
+        formData.append("brand", this.state.brand);
+        formData.append("price", this.state.price);
+
+        if(this.state.selectedFiles) {
+            for(let i = 0; i < this.state.selectedFiles.length; i++) {
+                formData.append("tshirtPhotos", this.state.selectedFiles[i]);
+            }
+        }
+
+        axios.put(`${SERVER_HOST}/tshirts/${this.props.match.params.id}`, formData, {
+            headers: { "authorization": localStorage.token, "Content-Type": "multipart/form-data" }
+        })
+            .then(res => {
+                if (res.data.errorMessage) {
+                    this.setState({ errorMessage: res.data.errorMessage, wasSubmittedAtLeastOnce: true });
+                } else {
+                    this.setState({ redirectToDisplayAllTshirts: true });
+                }
+            })
+            .catch(err => {
+                const errorMessage = err.response && err.response.data.errorMessage
+                    ? err.response.data.errorMessage : "An unexpected error occurred.";
+                this.setState({ errorMessage: errorMessage, wasSubmittedAtLeastOnce: true });
+            });
+    }
+
 
 
     render() 
@@ -132,7 +187,25 @@ export default class EditTshirt extends Component
                         <Form.Label>Price</Form.Label>
                         <Form.Control type="text" name="price" value={this.state.price} onChange={this.handleChange} />
                     </Form.Group>
-  
+
+                    <Form.Group controlId="photos">
+                        <Form.Label>Photos</Form.Label>
+                        <Form.Control type = "file" name="tshirtPhotos" multiple onChange = {this.handleFileChange}/>
+                    </Form.Group> <br/><br/>
+
+                    <div className="photos-container">
+                        {this.state.photos && this.state.photos.map((photo, index) => (
+                            <div key={photo._id} className="photo">
+                                <img src={photo.src || ''} alt={`T-shirt ${index}`} />
+                                <button type="button" onClick={() => this.handleDeletePhoto(this.props.match.params.id, photo._id)}>Delete</button>
+
+                            </div>
+                        ))}
+                    </div>
+
+
+
+
                     <LinkInClass value="Update" className="green-button" onClick={this.handleSubmit}/>  
     
                     <Link className="red-button" to={"/DisplayAllTshirts"}>Cancel</Link>

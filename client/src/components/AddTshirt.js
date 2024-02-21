@@ -85,7 +85,6 @@ export default class AddTshirt extends Component
                 this.setState({ redirectToDisplayAllTshirts: true });
             }
         }).catch(err => {
-            // Handle other errors or set a general error message
             const errorMessage = err.response && err.response.data.errorMessage
                 ? err.response.data.errorMessage : "An unexpected error occurred.";
             this.setState({ errorMessage: errorMessage, wasSubmittedAtLeastOnce: true });
@@ -146,6 +145,7 @@ export default class AddTshirt extends Component
                         <Form.Label>Photos</Form.Label>
                         <Form.Control type = "file" name="tshirtPhotos" multiple onChange = {this.handleFileChange}/>
                     </Form.Group> <br/><br/>
+
             
                     <LinkInClass value="Add" className="addbutton" onClick={this.handleSubmit}/>
             

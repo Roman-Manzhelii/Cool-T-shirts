@@ -5,7 +5,6 @@ const jwt = require('jsonwebtoken')
 const fs = require('fs')
 const JWT_PRIVATE_KEY = fs.readFileSync(process.env.JWT_PRIVATE_KEY_FILENAME, 'utf8')
 const multer = require('multer');
-const path = require('path');
 
 const fileFilter = (req, file, cb) => {
     const allowedTypes = /jpeg|jpg|png/;
@@ -103,7 +102,6 @@ const createNewTshirtDocument = (req, res, next) =>
 
 const getAllTshirtDocuments = (req, res, next) =>
 {
-    //user does not have to be logged in to see car details
     tshirtsModel.find((err, data) =>
     {
         if(err)
@@ -127,6 +125,29 @@ const getTshirtPhotoAsBase64 = (req, res, next) =>
 }
 
 
+const deleteTshirtPhoto =  (req, res, next) => {
+    const { tshirtId, photoId } = req.params;
+
+    tshirtsModel.findByIdAndUpdate(
+        tshirtId,
+        { $pull: { photos: { _id: photoId } } },
+        { new: true },
+        (err, tshirt) => {
+            if (err) {
+                console.error(err);
+                return res.status(500).send('Error deleting photo');
+            }
+
+            if (!tshirt) {
+                return res.status(404).send('T-shirt not found');
+            }
+
+            res.send('Photo deleted successfully');
+        }
+    );
+};
+
+
 const getTshirtDocument = (req, res, next) =>
 {
     tshirtsModel.findById(req.params.id, (err, data) =>
@@ -140,17 +161,36 @@ const getTshirtDocument = (req, res, next) =>
 }
 
 
-const updateTshirtDocument = (req, res, next) =>
-{
-    tshirtsModel.findByIdAndUpdate(req.params.id, {$set: req.body}, (err, data) =>
-    {
-        if(err)
-        {
-            return next(err)
+const updateTshirtDocument = async (req, res, next) => {
+    try {
+        const updateData = {
+            style: req.body.style,
+            color: req.body.color,
+            size: req.body.size,
+            materials: req.body.materials,
+            country_of_manufacture: req.body.country_of_manufacture,
+            brand: req.body.brand,
+            price: req.body.price,
+        };
+
+        const existingTshirt = await tshirtsModel.findById(req.params.id);
+        const newPhotos = req.files.map(file => ({ filename: file.filename }));
+        updateData.photos = existingTshirt.photos.concat(newPhotos.filter(newPhoto =>
+            !existingTshirt.photos.some(existingPhoto => existingPhoto.filename === newPhoto.filename)
+        ))
+        const updatedTshirt = await tshirtsModel.findByIdAndUpdate(req.params.id, updateData, { new: true });
+
+        if (!updatedTshirt) {
+            return res.status(404).send('T-shirt not found');
         }
-        return res.json(data)
-    })
-}
+        res.json(updatedTshirt);
+    } catch (err) {
+        console.error(err);
+        return next(err);
+    }
+};
+
+
 
 
 const deleteTshirtDocument = (req, res, next) =>
@@ -179,11 +219,15 @@ router.get(`/tshirts/:id`, verifyUsersJWTPassword, getTshirtDocument)
 router.post(`/tshirts`, upload, verifyUsersJWTPassword, checkThatUserIsAnAdministrator, validateTshirtFields, createNewTshirtDocument);
 
 
-
 // Update one record
-router.put(`/tshirts/:id`, verifyUsersJWTPassword, checkThatUserIsAnAdministrator, validateTshirtFields, updateTshirtDocument);
+router.put(`/tshirts/:id`, upload, verifyUsersJWTPassword, checkThatUserIsAnAdministrator, validateTshirtFields, updateTshirtDocument);
 
 // Delete one record
 router.delete(`/tshirts/:id`, verifyUsersJWTPassword, checkThatUserIsAnAdministrator, deleteTshirtDocument)
+
+// Delete one photo
+router.delete('/tshirts/:tshirtId/photos/:photoId', verifyUsersJWTPassword, checkThatUserIsAnAdministrator, deleteTshirtPhoto)
+
+
 
 module.exports = router
