@@ -5,33 +5,28 @@ import axios from "axios"
 import {SERVER_HOST} from "../config/global_constants"
 
 
-export default class DeleteTshirt extends Component
-{
-    constructor(props) 
-    {
+export default class DeleteTshirt extends Component {
+    constructor(props) {
         super(props)
-        
+
         this.state = {
-            redirectToDisplayAllTshirts:false
+            redirectToDisplayAllTshirts: false
         }
     }
-    
-    
-    componentDidMount() 
-    {
+
+
+    componentDidMount() {
         axios.delete(`${SERVER_HOST}/tshirts/${this.props.match.params.id}`, {headers: {"authorization": localStorage.token}})
-        .then(() =>
-        {
-            this.setState({redirectToDisplayAllTshirts:true})
-        })
-            .catch(error => console.log(error));
+            .then(() => {
+                this.setState({redirectToDisplayAllTshirts: true})
+            })
+            .catch(error => console.log(error))
     }
-  
-  
-    render() 
-    {
+
+
+    render() {
         return (
-            <div>   
+            <div>
                 {this.state.redirectToDisplayAllTshirts ? <Redirect to="/DisplayAllTshirts"/> : null}
             </div>
         )

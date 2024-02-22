@@ -1,4 +1,5 @@
 import React, {Component} from "react"
+
 export default class FilterTshirts extends Component {
     constructor(props) {
         super(props)
@@ -36,9 +37,9 @@ export default class FilterTshirts extends Component {
                 size: Object.keys(this.state.sizes).filter(key => this.state.sizes[key]),
                 color: Object.keys(this.state.colors).filter(key => this.state.colors[key]),
                 style: Object.keys(this.state.styles).filter(key => this.state.styles[key])
-            };
-            this.props.onFilterChange(filters);
-        });
+            }
+            this.props.onFilterChange(filters)
+        })
     }
 
 
@@ -54,7 +55,7 @@ export default class FilterTshirts extends Component {
                 />
                 <label className="form-check-label" htmlFor={`size-${size}`}>{size}</label>
             </div>
-        ));
+        ))
     }
 
     renderColorCheckboxes() {
@@ -69,7 +70,7 @@ export default class FilterTshirts extends Component {
                 />
                 <label className="form-check-label" htmlFor={`color-${color}`}>{color}</label>
             </div>
-        ));
+        ))
     }
 
     renderStyleCheckboxes() {
@@ -84,7 +85,7 @@ export default class FilterTshirts extends Component {
                 />
                 <label className="form-check-label" htmlFor={`style-${style}`}>{style}</label>
             </div>
-        ));
+        ))
     }
 
     render() {
@@ -97,6 +98,6 @@ export default class FilterTshirts extends Component {
                 <h4>Filter by Style</h4>
                 <div>{this.renderStyleCheckboxes()}</div>
             </div>
-        );
+        )
     }
 }
