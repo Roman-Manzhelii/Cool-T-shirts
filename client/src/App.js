@@ -4,6 +4,7 @@ import {BrowserRouter, Switch, Route} from "react-router-dom"
 import "bootstrap/dist/css/bootstrap.css"
 import "./css/App.css"
 
+
 import Register from "./components/Register"
 import ResetDatabase from "./components/ResetDatabase"
 import Login from "./components/Login"
