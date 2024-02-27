@@ -1,32 +1,42 @@
-// Server-side global variables
-require(`dotenv`).config({path: `./config/.env`})
-const path = require("path")
-
-// Database
-require(`./config/db`)
-
 // Express
 const express = require(`express`)
 const app = express()
 const multer = require('multer')
+const createError = require('http-errors');
 
-app.use(require(`body-parser`).json())
-app.use(require(`cors`)({credentials: true, origin: process.env.LOCAL_HOST}))
+
+app.use(express.json());
+app.use(express.urlencoded({extended: true}))
+
+let PORT
+if (process.env.NODE_ENV === "production") // gcloud production mode
+{
+    require(`./config/db`)
+    PORT = process.env.PORT    // Port is automatically set by gcloud and stored in the environment variable "process.env.PORT"
+} else // development mode
+{
+    console.log("Development mode. Running on local host server")
+    require(`dotenv`).config({path: `./config/.env`})
+    app.use(require(`cors`)({credentials: true, origin: process.env.LOCAL_HOST}))  //  not needed in gcloud
+    require(`./config/db`)
+    PORT = process.env.SERVER_PORT
+}
 
 // Routers
 app.use(require(`./routes/tshirts`))
 app.use(require(`./routes/users`))
 
+const path = require("path")
+app.use(express.static(path.join(__dirname, "..", 'client', 'build')));
 
-const appPath = path.join(__dirname, "..", "client/build")
-app.use(express.static(appPath))
-app.get("*", function (req, res) {
-    res.sendFile(path.resolve(appPath, "index.html"))
-})
+// Маршрут для обробки всіх інших запитів, повертає index.html
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, "..", 'client', 'build', 'index.html'));
+});
 
 // Port
-app.listen(process.env.SERVER_PORT, () => {
-    console.log(`Connected to port ` + process.env.SERVER_PORT)
+app.listen(PORT, () => {
+    console.log(`Connected to port ` + PORT)
 })
 
 // Error 404
@@ -55,5 +65,3 @@ app.use(function (err, req, res, next) {
 
     res.status(err.statusCode).json({errorMessage: errorMessage})
 })
-
-

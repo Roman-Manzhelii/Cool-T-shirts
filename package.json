@@ -1,5 +1,10 @@
 {
+  "main": "server.js",
+  "scripts": {
+    "start": "npm start --prefix server"
+  },
   "dependencies": {
+    "express": "^4.16.3",
     "@syncfusion/ej2-react-inputs": "^24.2.5",
     "empty-folder": "^2.0.4",
     "http-errors": "^2.0.0",
