@@ -51,10 +51,12 @@ export default class DisplayAllTshirts extends Component {
                             <Logout/>
                         </div>
                         :
-                        <div>
+                        <div className= "welcome-container">
+                        <div className="welcome">
                             <Link className="green-button" to={"/Login"}>Login</Link>
                             <Link className="blue-button" to={"/Register"}>Register</Link>
                             <Link className="red-button" to={"/ResetDatabase"}>Reset Database</Link> <br/><br/><br/>
+                        </div>
                         </div>
                 }
 
