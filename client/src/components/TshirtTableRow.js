@@ -23,13 +23,16 @@ export default class TshirtTableRow extends Component {
     render() {
         return (
             <tr>
+
                 <td>{this.props.tshirt.style}</td>
                 <td>{this.props.tshirt.color}</td>
                 <td>{this.props.tshirt.brand}</td>
                 <td>{this.props.tshirt.price}</td>
+
                 <td className="tshirtPhotos">
                     {this.props.tshirt.photos.map(photo => <img key={photo._id} id={photo._id} alt=""/>)}
                 </td>
+
                 <td>
                     {localStorage.accessLevel > ACCESS_LEVEL_GUEST ?
                         <Link className="edit-button" to={"/EditTshirt/" + this.props.tshirt._id}>Edit</Link> : null}

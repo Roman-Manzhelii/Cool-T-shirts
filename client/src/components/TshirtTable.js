@@ -8,18 +8,6 @@ export default class TshirtTable extends Component
     {
         return (
             <table>
-                <thead>
-                    <tr>
-
-                        <th>Style</th>
-                        <th>Color</th>
-                        <th>Brand</th>
-                        <th>Price</th>
-                        <th>Photos</th>
-                        <th> </th>
-                    </tr>
-                </thead>
-                  
                 <tbody>
                     {this.props.tshirts.map((tshirt) => <TshirtTableRow key={tshirt._id} tshirt={tshirt}/>)}
                 </tbody>

@@ -104,7 +104,7 @@ color:pink;
 
 .table-container tbody tr:nth-child(even) 
 {
-    background-color: #ffa;
+    background-color:  #b3c6ff;
 }
 
 .add-new-tshirt
@@ -126,14 +126,12 @@ color:pink;
 {
     overflow-x: auto;
     white-space: nowrap;
-    min-width:18em;
-    max-width:18em;
+
 }
 
 .tshirtPhotos img
 {
-    width:5em;
-    height:5em;
+
     padding:0;
     margin:0;
     margin-right:0.5em;
@@ -155,13 +153,12 @@ tbody{
 }
 tr {
     display: flex;
-    width: 300px;
-    height: 200px;
+   width: 350px;
+    height: 370px;
     margin: 20px;
-    padding: 10px;
-    align-items: flex-end;
-    flex-direction: row;
-    flex-wrap: wrap;
+    padding: 5px;
+    align-items: center;
+    flex-direction: column-reverse;
 }
 
 .photos-container {
@@ -170,6 +167,11 @@ tr {
 }
 
 .photo {
-    flex: 1 0 30%;
+    max-width: 100px;
+    max-height: 150px;
     margin: 5px;
+}
+.td ,img{
+    max-width: 200px;
+    max-height: 150px;
 }

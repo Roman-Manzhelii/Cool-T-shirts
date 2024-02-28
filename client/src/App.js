@@ -4,6 +4,7 @@ import {BrowserRouter, Switch, Route} from "react-router-dom"
 import "bootstrap/dist/css/bootstrap.css"
 import "./css/App.css"
 import "./css/index.css"
+import Header from './components/Header';
 
 import Register from "./components/Register"
 import ResetDatabase from "./components/ResetDatabase"
@@ -31,7 +32,13 @@ export default class App extends Component {
     render() {
         return (
 
+
+
             <BrowserRouter>
+                <div className="My-header">
+                    <Header />
+                    {/* Other components and content of your application */}
+                </div>
                 <Switch>
                     <Route exact path="/Register" component={Register}/>
                     <Route exact path="/ResetDatabase" component={ResetDatabase}/>
