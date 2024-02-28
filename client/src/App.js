@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.css"
 import "./css/App.css"
 import "./css/index.css"
 import Header from './components/Header';
+import Footer from './components/Footer';
 
 import Register from "./components/Register"
 import ResetDatabase from "./components/ResetDatabase"
@@ -51,6 +52,10 @@ export default class App extends Component {
                     <Route exact path="/DisplayAllTshirts" component={DisplayAllTshirts}/>
                     <Route path="*" component={DisplayAllTshirts}/>
                 </Switch>
+                <div className="My-footer">
+                    <Footer />
+                    {/* Other components and content of your application */}
+                </div>
             </BrowserRouter>
 
         )
