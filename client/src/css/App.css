@@ -9,18 +9,30 @@
   margin: 0 auto;
 
 }
-.form-container{
-
+.form-container {
+    display: flex;
+    justify-content: center;
     margin-top: 0;
+    flex-direction: column;
+    align-items: center;
 }
-
+.welcome-container{
+    margin-top: 30px;
+    width:800px;
+    display:flex;
+    justify-content: center;
+}
+.welcome{
+    width:200px;
+    margin-bottom: 10px;
+}
 .form-container
 {
       border:thin solid #aaaaaa;
     margin-left: auto;
     margin-right: auto;
     border-radius: 5px;
-    background: #f7f7f7;
+    background-image: linear-gradient(to right, #0055ff , #99bbff);
 }
 
 
@@ -34,38 +46,22 @@
 .red-button,
 .blue-button
 {
+
+    margin-bottom: 10px;
     display: block;
     color: white;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
   cursor:pointer;
+    background-color: #0d0d26;
 }
 
 
 
-.green-button:hover,
-.red-button:hover,
-.blue-button:hover
-{
-    text-decoration: none;
-    color:#fff;
-}
 
-.green-button:hover
-{
-    background-color: #107020; 
-}
 
-.red-button:hover
-{
-  background-color: #a01020; 
-}
 
-.blue-button:hover
-{
-  background-color: #1020a0; 
-}
 /* end of link buttons */
 
 
