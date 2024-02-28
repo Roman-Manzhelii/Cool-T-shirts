@@ -8,9 +8,11 @@ export default class SearchTshirts extends Component {
     render() {
         return (
             <div className="search-container">
+<span className="material-symbols-outlined">search
+</span>
                 <input
                     type="text"
-                    placeholder="Search..."
+                    placeholder= "Search..."
                     onChange={this.handleSearch}
                 />
             </div>

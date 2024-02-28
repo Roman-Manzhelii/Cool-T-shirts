@@ -160,6 +160,8 @@ tr {
     margin: 20px;
     padding: 10px;
     align-items: flex-end;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
 .photos-container {
