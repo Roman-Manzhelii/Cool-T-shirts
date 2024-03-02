@@ -63,10 +63,13 @@ const validateTshirtFields = (req, res, next) => {
     if (!req.body.brand || req.body.brand.length === 0) {
         return res.json({errorMessage: `Brand cannot be empty`})
     }
-    if (req.body.price < 0.01 || req.body.price > 100000) {
+    if (req.body.rating.length === 0 || !["1", "2", "3", "4", "5"].includes(req.body.rating)) {
+        return res.status(400).json({errorMessage: "The rating can be one of the following values: 1, 2, 3, 4, 5"});
+    }
+    if (req.body.price.length === 0 || req.body.price < 0.01 || req.body.price > 100000) {
         return res.json({errorMessage: `Price needs to be between €0.01 and €100000`})
     }
-    if (req.body.quantity < 0 || req.body.quantity > 1000) {
+    if (req.body.quantity.length === 0 || req.body.quantity < 0 || req.body.quantity > 1000) {
         return res.json({errorMessage: `Quantity needs to be between 0 and 1000`})
     }
     next()
@@ -80,6 +83,7 @@ const createNewTshirtDocument = (req, res, next) => {
         materials: req.body.materials,
         country_of_manufacture: req.body.country_of_manufacture,
         brand: req.body.brand,
+        rating: req.body.rating,
         price: req.body.price,
         quantity: req.body.quantity,
         photos: req.files.map(file => ({filename: file.filename}))
@@ -178,6 +182,7 @@ const updateTshirtDocument = (req, res, next) => {
             materials: req.body.materials,
             country_of_manufacture: req.body.country_of_manufacture,
             brand: req.body.brand,
+            rating: req.body.rating,
             price: req.body.price,
             quantity: req.body.quantity
         }

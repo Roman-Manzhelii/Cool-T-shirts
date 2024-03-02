@@ -45,6 +45,7 @@ export default class TshirtTableRow extends Component {
                 <td>{this.props.tshirt.style}</td>
                 <td>{this.props.tshirt.color}</td>
                 <td>{this.props.tshirt.brand}</td>
+                <td>{this.props.tshirt.rating}</td>
                 <td>{this.props.tshirt.price}€</td>
 
                 <td className="tshirtPhotos">

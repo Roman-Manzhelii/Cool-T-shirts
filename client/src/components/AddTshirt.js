@@ -20,6 +20,7 @@ export default class AddTshirt extends Component {
             materials: [],
             country_of_manufacture: "",
             brand: "",
+            rating: "",
             price: "",
             quantity: "",
             selectedFiles: null,
@@ -61,6 +62,7 @@ export default class AddTshirt extends Component {
         })
         formData.append("country_of_manufacture", this.state.country_of_manufacture)
         formData.append("brand", this.state.brand)
+        formData.append("rating", this.state.rating)
         formData.append("price", this.state.price)
         formData.append("quantity", this.state.quantity)
 
@@ -132,6 +134,11 @@ export default class AddTshirt extends Component {
                     <Form.Group controlId="brand">
                         <Form.Label>Brand</Form.Label>
                         <Form.Control type="text" name="brand" value={this.state.brand} onChange={this.handleChange}/>
+                    </Form.Group>
+
+                    <Form.Group controlId="rating">
+                        <Form.Label>Rating</Form.Label>
+                        <Form.Control type="text" name="rating" value={this.state.rating} onChange={this.handleChange}/>
                     </Form.Group>
 
                     <Form.Group controlId="price">
