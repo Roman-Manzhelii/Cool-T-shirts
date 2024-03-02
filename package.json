@@ -4,9 +4,9 @@
     "start": "npm start --prefix server"
   },
   "dependencies": {
-    "express": "^4.16.3",
     "@syncfusion/ej2-react-inputs": "^24.2.5",
     "empty-folder": "^2.0.4",
+    "express": "^4.16.3",
     "http-errors": "^2.0.0",
     "jsonwebtoken": "^9.0.2",
     "multer": "^1.4.5-lts.1"

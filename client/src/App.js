@@ -1,24 +1,24 @@
 import React, {Component} from "react"
 import {BrowserRouter, Switch, Route} from "react-router-dom"
-
+import {ACCESS_LEVEL_GUEST} from "./config/global_constants"
 import "bootstrap/dist/css/bootstrap.css"
 import "./css/App.css"
 import "./css/index.css"
-import Header from './components/Header';
-import Footer from './components/Footer';
+import Header from "./components/Header"
+import Footer from "./components/Footer"
 
 import Register from "./components/Register"
-import ResetDatabase from "./components/ResetDatabase"
+// import ResetDatabase from "./components/ResetDatabase"
 import Login from "./components/Login"
 import Logout from "./components/Logout"
 import AddTshirt from "./components/AddTshirt"
 import EditTshirt from "./components/EditTshirt"
 import DeleteTshirt from "./components/DeleteTshirt"
 import DisplayAllTshirts from "./components/DisplayAllTshirts"
+import BuyTshirt from "./components/BuyTshirt"
+import PayPalMessage from "./components/PayPalMessage"
 import LoggedInRoute from "./components/LoggedInRoute"
-
-
-import {ACCESS_LEVEL_GUEST} from "./config/global_constants"
+import ShoppingCart from "./components/ShoppingCart"
 
 
 if (typeof localStorage.accessLevel === "undefined") {
@@ -34,27 +34,28 @@ export default class App extends Component {
         return (
 
 
-
             <BrowserRouter>
                 <div className="My-header">
-                    <Header />
-                    {/* Other components and content of your application */}
+                    <Header/>
                 </div>
                 <Switch>
                     <Route exact path="/Register" component={Register}/>
-                    <Route exact path="/ResetDatabase" component={ResetDatabase}/>
+                    {/*<Route exact path="/ResetDatabase" component={ResetDatabase}/>*/}
                     <Route exact path="/" component={DisplayAllTshirts}/>
                     <Route exact path="/Login" component={Login}/>
+                    <Route exact path="/BuyTshirt/:id" component={BuyTshirt}/>
+                    <Route exact path="/PayPalMessage/:messageType/:payPalPaymentID" component={PayPalMessage}/>
                     <LoggedInRoute exact path="/Logout" component={Logout}/>
                     <LoggedInRoute exact path="/AddTshirt" component={AddTshirt}/>
                     <LoggedInRoute exact path="/EditTshirt/:id" component={EditTshirt}/>
                     <LoggedInRoute exact path="/DeleteTshirt/:id" component={DeleteTshirt}/>
+                    <LoggedInRoute exact path="/ShoppingCart" component={ShoppingCart}/>
                     <Route exact path="/DisplayAllTshirts" component={DisplayAllTshirts}/>
+
                     <Route path="*" component={DisplayAllTshirts}/>
                 </Switch>
                 <div className="My-footer">
-                    <Footer />
-                    {/* Other components and content of your application */}
+                    <Footer/>
                 </div>
             </BrowserRouter>
 

@@ -104,7 +104,13 @@ const addNewUserToUsersCollection = (req, res, next) => {
                     return next(err)
                 }
 
-                return res.json({name: data.name, accessLevel: data.accessLevel, profilePhoto: fileData, token: token})
+                return res.json({
+                    name: data.name,
+                    email: data.email,
+                    accessLevel: data.accessLevel,
+                    profilePhoto: fileData,
+                    token: token
+                })
             })
         })
     })
@@ -143,7 +149,7 @@ const addAdminUserToUsersCollection = async (req, res, next) => {
             return next(createError(409, `Failed to create Admin user for testing purposes`))
         }
 
-        emptyFolder(process.env.UPLOADED_FILES_FOLDER, false, (result) => {
+        emptyFolder(process.env.UPLOADED_FILES_FOLDER, false, () => {
             return res.json(data)
         })
     } catch (err) {
@@ -167,6 +173,7 @@ const returnUsersDetailsAsJSON = (req, res, next) => {
             if (data) {
                 return res.json({
                     name: req.data.name,
+                    email: req.data.email,
                     accessLevel: req.data.accessLevel,
                     profilePhoto: data,
                     token: token
@@ -174,6 +181,7 @@ const returnUsersDetailsAsJSON = (req, res, next) => {
             } else {
                 return res.json({
                     name: req.data.name,
+                    email: req.data.email,
                     accessLevel: req.data.accessLevel,
                     profilePhoto: null,
                     token: token
@@ -181,12 +189,18 @@ const returnUsersDetailsAsJSON = (req, res, next) => {
             }
         })
     } else {
-        return res.json({name: req.data.name, accessLevel: req.data.accessLevel, profilePhoto: null, token: token})
+        return res.json({
+            name: req.data.name,
+            email: req.data.email,
+            accessLevel: req.data.accessLevel,
+            profilePhoto: null,
+            token: token
+        })
     }
 }
 
 
-const logout = (req, res, next) => {
+const logout = (req, res) => {
     return res.json({})
 }
 

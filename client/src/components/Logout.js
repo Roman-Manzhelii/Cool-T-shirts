@@ -19,7 +19,7 @@ export default class Logout extends Component {
     handleSubmit = (e) => {
         e.preventDefault()
         axios.post(`${SERVER_HOST}/users/logout`)
-            .then(res => {
+            .then(() => {
                 localStorage.clear()
                 this.setState({isLoggedIn: false})
             })

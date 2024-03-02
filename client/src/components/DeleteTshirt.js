@@ -16,7 +16,12 @@ export default class DeleteTshirt extends Component {
 
 
     componentDidMount() {
-        axios.delete(`${SERVER_HOST}/tshirts/${this.props.match.params.id}`, {headers: {"authorization": localStorage.token}})
+        axios.delete(`${SERVER_HOST}/tshirts/${this.props.match.params.id}`, {
+            headers: {
+                "authorization": localStorage.token,
+                "Content-Type": "application/json"
+            }
+        })
             .then(() => {
                 this.setState({redirectToDisplayAllTshirts: true})
             })

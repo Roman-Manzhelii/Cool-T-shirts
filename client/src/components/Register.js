@@ -84,6 +84,7 @@ export default class Register extends Component {
         axios.post(`${SERVER_HOST}/users/register/${this.state.name}/${this.state.email}/${this.state.password}`, formData, {headers: {"Content-type": "multipart/form-data"}})
             .then(res => {
                 localStorage.name = res.data.name
+                localStorage.email = res.data.email
                 localStorage.accessLevel = res.data.accessLevel
                 localStorage.token = res.data.token
                 localStorage.profilePhoto = res.data.profilePhoto

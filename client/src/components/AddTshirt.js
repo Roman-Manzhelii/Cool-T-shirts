@@ -21,6 +21,7 @@ export default class AddTshirt extends Component {
             country_of_manufacture: "",
             brand: "",
             price: "",
+            quantity: "",
             selectedFiles: null,
             errorMessage: "",
             redirectToDisplayAllTshirts: localStorage.accessLevel < ACCESS_LEVEL_ADMIN,
@@ -61,6 +62,7 @@ export default class AddTshirt extends Component {
         formData.append("country_of_manufacture", this.state.country_of_manufacture)
         formData.append("brand", this.state.brand)
         formData.append("price", this.state.price)
+        formData.append("quantity", this.state.quantity)
 
         if (this.state.selectedFiles) {
             for (let i = 0; i < this.state.selectedFiles.length; i++) {
@@ -135,6 +137,12 @@ export default class AddTshirt extends Component {
                     <Form.Group controlId="price">
                         <Form.Label>Price</Form.Label>
                         <Form.Control type="text" name="price" value={this.state.price} onChange={this.handleChange}/>
+                    </Form.Group>
+
+                    <Form.Group controlId="quantity">
+                        <Form.Label>Quantity</Form.Label>
+                        <Form.Control type="text" name="quantity" value={this.state.quantity}
+                                      onChange={this.handleChange}/>
                     </Form.Group>
 
                     <Form.Group controlId="photos">

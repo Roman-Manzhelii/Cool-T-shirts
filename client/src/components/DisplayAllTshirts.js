@@ -6,7 +6,7 @@ import axios from "axios"
 import TshirtTable from "./TshirtTable"
 import Logout from "./Logout"
 
-import {ACCESS_LEVEL_GUEST, ACCESS_LEVEL_ADMIN, SERVER_HOST} from "../config/global_constants"
+import {ACCESS_LEVEL_GUEST, ACCESS_LEVEL_ADMIN, SERVER_HOST, ACCESS_LEVEL_NORMAL_USER} from "../config/global_constants"
 import SortTshirts from "./SortTshirts"
 import FilterTshirts from './FilterTshirts'
 import SearchTshirts from "./SearchTshirts"
@@ -27,6 +27,7 @@ export default class DisplayAllTshirts extends Component {
             sortOption: ''
         }
     }
+
 
     componentDidMount() {
         axios.get(`${SERVER_HOST}/tshirts`)
@@ -51,13 +52,22 @@ export default class DisplayAllTshirts extends Component {
                             <Logout/>
                         </div>
                         :
-                        <div className= "welcome-container">
-                        <div className="welcome">
-                            <Link className="green-button" to={"/Login"}>Login</Link>
-                            <Link className="blue-button" to={"/Register"}>Register</Link>
-                            <Link className="red-button" to={"/ResetDatabase"}>Reset Database</Link> <br/><br/><br/>
+                        <div className="welcome-container">
+                            <div className="welcome">
+                                <Link className="green-button" to={"/Login"}>Login</Link>
+                                <Link className="blue-button" to={"/Register"}>Register</Link>
+                                {/*<Link className="red-button" to={"/ResetDatabase"}>Reset Database</Link> */}
+                                <br/><br/><br/>
+                            </div>
                         </div>
-                        </div>
+                }
+
+                {localStorage.accessLevel >= ACCESS_LEVEL_NORMAL_USER ?
+                    <div className="shoppingcart-tshirt">
+                        <Link className="shoppingcart-button" to={"/ShoppingCart"}>Cart</Link>
+                    </div>
+                    :
+                    null
                 }
 
                 <SearchTshirts onSearch={this.handleSearch}/>
@@ -125,11 +135,6 @@ export default class DisplayAllTshirts extends Component {
                 filters.style.some(style => tshirt.style.toLowerCase().includes(style.toLowerCase()))
             )
         }
-
-
-        console.log(filters)
-        console.log(filteredTshirts)
-
         this.setState({tshirts: filteredTshirts}, this.sortTshirts)
     }
 

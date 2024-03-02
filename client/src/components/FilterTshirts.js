@@ -15,12 +15,17 @@ export default class FilterTshirts extends Component {
             colors: {
                 red: false,
                 blue: false,
-                green: false
+                green: false,
+                indigo: false,
+                black: false,
+                white: false
             },
             styles: {
                 casual: false,
                 formal: false,
-                sport: false
+                sport: false,
+                V_neck: false,
+                polo: false
             }
         }
     }
@@ -91,11 +96,11 @@ export default class FilterTshirts extends Component {
     render() {
         return (
             <div className="filterCheckboxes">
-                <h4>Filter by Size</h4>
+                <h5>Size</h5>
                 <div>{this.renderSizeCheckboxes()}</div>
-                <h4>Filter by Color</h4>
+                <h5>Color</h5>
                 <div>{this.renderColorCheckboxes()}</div>
-                <h4>Filter by Style</h4>
+                <h5>Style</h5>
                 <div>{this.renderStyleCheckboxes()}</div>
             </div>
         )

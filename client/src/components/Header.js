@@ -1,13 +1,13 @@
 // Header.js
 
-import React from 'react';
+import React from 'react'
 
 const Header = () => {
     return (
         <header>
-            <img src ="./photos/C.png" alt = "logo"/>
+            <img src="./photos/C.png" alt="logo"/>
         </header>
-    );
-};
+    )
+}
 
-export default Header;
+export default Header

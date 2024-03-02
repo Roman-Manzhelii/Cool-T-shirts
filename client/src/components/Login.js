@@ -29,6 +29,7 @@ export default class Login extends Component {
         axios.post(`${SERVER_HOST}/users/login/${this.state.email}/${this.state.password}`)
             .then(res => {
                 localStorage.name = res.data.name
+                localStorage.email = res.data.email
                 localStorage.accessLevel = res.data.accessLevel
                 localStorage.token = res.data.token
                 localStorage.profilePhoto = res.data.profilePhoto

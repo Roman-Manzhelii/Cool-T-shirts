@@ -45,28 +45,30 @@ const checkThatUserIsAnAdministrator = (req, res, next) => {
 
 
 const validateTshirtFields = (req, res, next) => {
-    if (!/^[a-zA-Z]+$/.test(req.body.style)) {
-        return res.json({errorMessage: `Style must be a string`})
+    if (!req.body.style || req.body.style.length === 0) {
+        return res.json({errorMessage: `Style cannot be empty`})
     }
-    if (!/^[a-zA-Z]+$/.test(req.body.color)) {
-        return res.json({errorMessage: `Color must be a string`})
+    if (!req.body.color || req.body.color.length === 0) {
+        return res.json({errorMessage: `Color cannot be empty`})
     }
     if (!Array.isArray(req.body.size) || !req.body.size.every(size => ["XS", "S", "M", "L", "XL", "XXL"].includes(size))) {
-        return res.json({errorMessage: `Size must be an array containing any of ["XS", "S", "M", "L", "XL", "XXL"]`})
+        return res.json({errorMessage: `Size cannot be empty. Must contain any of ["XS", "S", "M", "L", "XL", "XXL"]. Split by coma ","`})
     }
-    if (!Array.isArray(req.body.materials) || !req.body.materials.every(material => /^[a-zA-Z]+$/.test(material))) {
-        return res.json({errorMessage: `Materials must be an array of strings containing only letters`})
+    if (!Array.isArray(req.body.materials) || !req.body.materials.every(material => material.length > 0)) {
+        return res.json({errorMessage: `Materials cannot be empty. Split by coma ","`})
     }
-    if (!/^[a-zA-Z]+$/.test(req.body.country_of_manufacture)) {
-        return res.json({errorMessage: `Country of manufacture must be a string`})
+    if (!req.body.country_of_manufacture || req.body.country_of_manufacture.length === 0) {
+        return res.json({errorMessage: `Country of manufacture cannot be empty`})
     }
-    if (!/^[a-zA-Z]+$/.test(req.body.brand)) {
-        return res.json({errorMessage: `Brand must be a string`})
+    if (!req.body.brand || req.body.brand.length === 0) {
+        return res.json({errorMessage: `Brand cannot be empty`})
     }
     if (req.body.price < 0.01 || req.body.price > 100000) {
         return res.json({errorMessage: `Price needs to be between €0.01 and €100000`})
     }
-
+    if (req.body.quantity < 0 || req.body.quantity > 1000) {
+        return res.json({errorMessage: `Quantity needs to be between 0 and 1000`})
+    }
     next()
 }
 
@@ -79,6 +81,7 @@ const createNewTshirtDocument = (req, res, next) => {
         country_of_manufacture: req.body.country_of_manufacture,
         brand: req.body.brand,
         price: req.body.price,
+        quantity: req.body.quantity,
         photos: req.files.map(file => ({filename: file.filename}))
     }
 
@@ -138,6 +141,23 @@ const getTshirtDocument = (req, res, next) => {
     })
 }
 
+const getSomeTshirtDocuments = (req, res, next) => {
+    const {ids} = req.body
+
+    if (!ids || ids.length === 0) {
+        return res.status(400).json({message: "No IDs provided."})
+    }
+
+    tshirtsModel.find({
+        '_id': {$in: ids}
+    }, (err, tshirts) => {
+        if (err) {
+            return next(err)
+        }
+        res.json(tshirts)
+    })
+}
+
 
 const updateTshirtDocument = (req, res, next) => {
     tshirtsModel.findById(req.params.id, (err, tshirt) => {
@@ -158,7 +178,8 @@ const updateTshirtDocument = (req, res, next) => {
             materials: req.body.materials,
             country_of_manufacture: req.body.country_of_manufacture,
             brand: req.body.brand,
-            price: req.body.price
+            price: req.body.price,
+            quantity: req.body.quantity
         }
 
         const totalPhotosAfterUpdate = (tshirt.photos.length - photosToDelete.length) + (req.files ? req.files.length : 0)
@@ -171,7 +192,7 @@ const updateTshirtDocument = (req, res, next) => {
             const newPhotos = req.files.map(file => ({filename: file.filename}))
             updateData.photos = [...tshirt.photos.filter(photo => !photosToDelete.includes(photo._id)), ...newPhotos]
         } else {
-            updateData.photos = tshirt.photos.filter(photo => !photosToDelete.includes(photo._id));
+            updateData.photos = tshirt.photos.filter(photo => !photosToDelete.includes(photo._id))
         }
 
         tshirtsModel.findByIdAndUpdate(req.params.id, {$set: updateData}, {new: true}, (updateErr, updatedTshirt) => {
@@ -194,20 +215,20 @@ const deleteTshirtDocument = (req, res, next) => {
     })
 }
 
-// read all records
+// Read all records
 router.get(`/tshirts`, getAllTshirtDocuments)
 
-
+//Get photo
 router.get(`/tshirts/photo/:filename`, getTshirtPhotoAsBase64)
-
 
 // Read one record
 router.get(`/tshirts/:id`, verifyUsersJWTPassword, getTshirtDocument)
 
+// Read couple records
+router.post(`/tshirts/bulk`, verifyUsersJWTPassword, getSomeTshirtDocuments)
 
 // Add new record
 router.post(`/tshirts`, upload, verifyUsersJWTPassword, checkThatUserIsAnAdministrator, validateTshirtFields, createNewTshirtDocument)
-
 
 // Update one record
 router.put(`/tshirts/:id`, upload, verifyUsersJWTPassword, checkThatUserIsAnAdministrator, validateTshirtFields, updateTshirtDocument)

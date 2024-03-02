@@ -14,7 +14,8 @@ let tshirtsSchema = new mongoose.Schema(
         country_of_manufacture: {type: String, required: true},
         brand: {type: String, required: true},
         price: {type: Number, required: true},
-        photos: [tshirtPhotosSchema]
+        photos: [tshirtPhotosSchema],
+        quantity: {type: Number, required: true}
     },
     {
         collection: `t-shirts`

@@ -19,6 +19,7 @@ export default class EditTshirt extends Component {
             country_of_manufacture: ``,
             brand: ``,
             price: ``,
+            quantity: ``,
             photos: ``,
             photosToDelete: [],
             selectedFiles: null,
@@ -30,7 +31,12 @@ export default class EditTshirt extends Component {
 
     componentDidMount() {
         this.inputToFocus.focus()
-        axios.get(`${SERVER_HOST}/tshirts/${this.props.match.params.id}`, {headers: {"authorization": localStorage.token}})
+        axios.get(`${SERVER_HOST}/tshirts/${this.props.match.params.id}`, {
+            headers: {
+                "authorization": localStorage.token,
+                "Content-Type": "multipart/form-data"
+            }
+        })
             .then(res => {
                 this.setState({
                     style: res.data.style,
@@ -40,6 +46,7 @@ export default class EditTshirt extends Component {
                     country_of_manufacture: res.data.country_of_manufacture,
                     brand: res.data.brand,
                     price: res.data.price,
+                    quantity: res.data.quantity,
                     photos: res.data.photos
                 })
                 this.loadImages(res.data.photos)
@@ -102,9 +109,10 @@ export default class EditTshirt extends Component {
         formData.append("country_of_manufacture", this.state.country_of_manufacture)
         formData.append("brand", this.state.brand)
         formData.append("price", this.state.price)
-        
+        formData.append("quantity", this.state.quantity)
+
         if (this.state.photosToDelete.length > 0) {
-            formData.append("photosToDelete", JSON.stringify(this.state.photosToDelete));
+            formData.append("photosToDelete", JSON.stringify(this.state.photosToDelete))
         }
 
         if (this.state.selectedFiles) {
@@ -121,7 +129,9 @@ export default class EditTshirt extends Component {
                     this.setState({errorMessage: res.data.errorMessage, wasSubmittedAtLeastOnce: true})
                 } else {
                     this.state.photosToDelete.forEach(photoId => {
-                        axios.delete(`${SERVER_HOST}/tshirts/${this.props.match.params.id}/photos/${photoId}`, {headers: {"authorization": localStorage.token}})
+                        axios.delete(`${SERVER_HOST}/tshirts/${this.props.match.params.id}/photos/${photoId}`, {
+                            headers: {"authorization": localStorage.token, "Content-Type": "multipart/form-data"}
+                        })
                             .then(() => console.log(`Photo ${photoId} deleted successfully`))
                             .catch(err => console.error(`Error deleting photo ${photoId}`, err))
                     })
@@ -187,6 +197,12 @@ export default class EditTshirt extends Component {
                     <Form.Group controlId="price">
                         <Form.Label>Price</Form.Label>
                         <Form.Control type="text" name="price" value={this.state.price} onChange={this.handleChange}/>
+                    </Form.Group>
+
+                    <Form.Group controlId="quantity">
+                        <Form.Label>Quantity</Form.Label>
+                        <Form.Control type="text" name="quantity" value={this.state.quantity}
+                                      onChange={this.handleChange}/>
                     </Form.Group>
 
                     <Form.Group controlId="photos">
