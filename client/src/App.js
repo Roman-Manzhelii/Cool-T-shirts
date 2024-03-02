@@ -7,6 +7,7 @@ import "./css/index.css"
 import Header from "./components/Header"
 import Footer from "./components/Footer"
 
+
 import Register from "./components/Register"
 // import ResetDatabase from "./components/ResetDatabase"
 import Login from "./components/Login"

@@ -40,6 +40,8 @@ export default class TshirtTableRow extends Component {
                     {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN ? <Link className="delete-button"
                                                                             to={"/DeleteTshirt/" + this.props.tshirt._id}>Delete</Link> : null}
                 </td>
+
+
             </tr>
         )
     }
