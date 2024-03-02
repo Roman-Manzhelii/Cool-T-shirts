@@ -15,7 +15,7 @@ code {
 footer{
   width: 100%;
   height: 400px;
-  background-color: blue;
+  background-color: black;
 }
 header{
   width: 100%;
@@ -32,4 +32,9 @@ header img{
 }
 .root{
   margin-top: 0;
+}
+
+footer img{
+  height:100px;
+  width:100px;
 }

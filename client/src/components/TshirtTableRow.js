@@ -1,7 +1,10 @@
 import React, {Component} from "react"
 import {Link} from "react-router-dom"
+
 import axios from "axios"
-import {ACCESS_LEVEL_ADMIN, SERVER_HOST, ACCESS_LEVEL_NORMAL_USER} from "../config/global_constants"
+
+import {ACCESS_LEVEL_GUEST, ACCESS_LEVEL_ADMIN, SERVER_HOST} from "../config/global_constants"
+
 
 export default class TshirtTableRow extends Component {
     componentDidMount() {
@@ -17,51 +20,25 @@ export default class TshirtTableRow extends Component {
         })
     }
 
-    addToCart = () => {
-        let cart = JSON.parse(localStorage.getItem("cart")) || []
-        const tshirtId = this.props.tshirt._id
-
-        if (!cart.includes(tshirtId)) {
-            cart.push(tshirtId)
-            localStorage.setItem("cart", JSON.stringify(cart))
-            alert("T-shirt added to cart")
-        } else {
-            alert("This T-shirt is already in the cart")
-        }
-    }
-
-
     render() {
-        let soldOrForSale
-
-        if (this.props.tshirt.quantity <= 0) {
-            soldOrForSale = "SOLD"
-        } else {
-            soldOrForSale = <button onClick={this.addToCart}>Add to cart</button>
-        }
-
         return (
-            <tr>
-                <td>{this.props.tshirt.style}</td>
-                <td>{this.props.tshirt.color}</td>
-                <td>{this.props.tshirt.brand}</td>
-                <td>{this.props.tshirt.rating}</td>
-                <td>{this.props.tshirt.price}€</td>
-
+            <tr >
+<td className="tshirtDetails">
+                <li>{this.props.tshirt.style}</li>
+                <li>{this.props.tshirt.color}</li>
+                <li>{this.props.tshirt.brand}</li>
+                <li>{this.props.tshirt.price}</li>
+</td>
                 <td className="tshirtPhotos">
                     {this.props.tshirt.photos.map(photo => <img key={photo._id} id={photo._id} alt=""/>)}
                 </td>
 
                 <td>
-                    {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN ?
+                    {localStorage.accessLevel > ACCESS_LEVEL_GUEST ?
                         <Link className="edit-button" to={"/EditTshirt/" + this.props.tshirt._id}>Edit</Link> : null}
 
-                    {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN ?
-                        <Link className="delete-button"
-                              to={"/DeleteTshirt/" + this.props.tshirt._id}>Delete</Link> : null}
-
-                    {localStorage.accessLevel >= ACCESS_LEVEL_NORMAL_USER ? soldOrForSale : null}
-
+                    {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN ? <Link className="delete-button"
+                                                                            to={"/DeleteTshirt/" + this.props.tshirt._id}>Delete</Link> : null}
                 </td>
             </tr>
         )

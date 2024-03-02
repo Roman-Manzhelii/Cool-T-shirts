@@ -1,6 +1,5 @@
-.container {
-  padding-top: 10px;
-}
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap');
+
 
 .form-container,
 .table-container 
@@ -126,6 +125,7 @@ color:pink;
 {
     overflow-x: auto;
     white-space: nowrap;
+    height: 400px;
 
 }
 
@@ -135,6 +135,7 @@ color:pink;
     margin:0;
     margin-right:0.5em;
     border:thin solid #ccc;
+
 }
 
 .nav-item {
@@ -144,7 +145,7 @@ display: flex;
     margin-top: 0;
 }
 
-/*tbody{
+tbody{
     display:flex;
     flex-direction:row;
     justify-content: space-between;
@@ -152,16 +153,15 @@ display: flex;
 }
 tr {
     border-radius: 10px;
-    display:flex;
-    width:350px;
+    display: flex;
+    width: 350px;
     height: 370px;
     margin: 20px;
     padding: 5px;
     align-items: center;
     flex-direction: column-reverse;
 }
-*/
-.tbody,tr{
+.tbody.tr{
     border-radius: 10px;
     position:relative;
     display:flex;
@@ -173,9 +173,37 @@ tr {
     transition: 0.5s;
     box-shadow: 0 35px 80px rgba(0, 0, 0, 0.15);
 }
-.table-container .tr:hover {
-    height: 400px;
+.tr .tshirtPhotos .tshirteditdelete {
+    position: absolute;
+    top: 20px;
+    width: 500px;
+    height: 220px;
+    background: #333;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: 0.5s;
 }
+ .tshirtPhotos{
+    height: 300px;
+     width: 270px;
+}
+.tshirtPhotos {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+input{
+    width: 800px;
+    height: 50px;
+    border-radius: 10px;
+    border: none;
+}
+
+
+
+
+
 
 .photos-container {
     display: flex;
@@ -188,6 +216,18 @@ tr {
     margin: 5px;
 }
 .td ,img{
-    max-width: 200px;
-    max-height: 150px;
+   max-width: 230px;
+    max-height: 250px;
+    border-radius:10px;
+}
+.td ,img:hover{
+    transform : scale(1.1);
+    transition: 0.5s;
+
+}
+.tshirtDetails ,li {
+    display: flex;
+    width: 100%;
+    justify-content: space-around;
+
 }
