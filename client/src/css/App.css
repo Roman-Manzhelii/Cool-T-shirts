@@ -71,10 +71,6 @@ input [type="button"]
 color:pink;
 }
 
-
-
-
-
 .table-container table
 {
     width:100%;
@@ -229,5 +225,25 @@ input{
     display: flex;
     width: 100%;
     justify-content: space-around;
+    font-family: "Lucida Console", "Courier New", monospace;
 
+}
+.edit-button,
+.delete-button{
+    padding: 10px 12px;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    color: white;display: inline-block;
+    font-size: 13px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.edit-button{
+   background-color:  #0d0d26;
+}
+.delete-button{
+    background-color: #0055ff;
 }
