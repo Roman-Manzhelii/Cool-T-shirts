@@ -26,12 +26,13 @@
 }
 .form-container
 {
+
       border:thin solid #aaaaaa;
-    margin-left: auto;
-    margin-right: auto;
     border-radius: 5px;
     background-image: linear-gradient(to right, #0055ff , #99bbff);
+    width: 100%;
 }
+
 
 .logout
 {
@@ -337,13 +338,25 @@ button{
     display: flex;
 }
 
-@media screen AND (max-width: 600px) {
+@media (min-width: 300px) and (max-width: 1000px) {
     .form-container{
+
         background-image: linear-gradient(to right, #0055ff , #99bbff);
-        width: 100%;
     }
     .nav-item{
         background-color: #0d0d26;
+    }
+    .search-container{
+        width:50%;
+    }
+    tbody {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    input {
+       width: 400px;
     }
 
 }
