@@ -19,8 +19,6 @@ export default class TshirtTableRowCart extends Component {
         })
     }
 
-// У файлі TshirtTableRowCart.js
-
     removeFromCart = () => {
         let cart = JSON.parse(localStorage.getItem("cart")) || []
         const newCart = cart.filter(id => id !== this.props.tshirt._id)

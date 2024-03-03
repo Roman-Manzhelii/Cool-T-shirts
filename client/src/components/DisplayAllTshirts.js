@@ -56,14 +56,29 @@ export default class DisplayAllTshirts extends Component {
                             <div className="welcome">
                                 <Link className="green-button" to={"/Login"}>Login</Link>
                                 <Link className="blue-button" to={"/Register"}>Register</Link>
-                                {/*<Link className="red-button" to={"/ResetDatabase"}>Reset Database</Link> */}
                                 <br/><br/><br/>
                             </div>
                         </div>
                 }
 
-                {localStorage.accessLevel >= ACCESS_LEVEL_NORMAL_USER ?
+                {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN ?
+                    <div className="user-table">
+                        <Link className="blue-button" to={"/UsersTable"}>Users</Link>
+                    </div>
+                    :
+                    null
+                }
 
+                {Number(localStorage.accessLevel) === ACCESS_LEVEL_NORMAL_USER ?
+                    <div className="sales-table">
+                        <Link className="blue-button" to={`/DisplaySales/${localStorage.email}`}>Purchases
+                            history</Link>
+                    </div>
+                    :
+                    null
+                }
+
+                {localStorage.accessLevel >= ACCESS_LEVEL_NORMAL_USER ?
                     <div className="shoppingcart-tshirt">
             <span className="material-symbols-outlined">
                     shopping_bag
@@ -116,7 +131,6 @@ export default class DisplayAllTshirts extends Component {
         ) : [...originalTshirts]
 
         this.setState({tshirts: searchFilteredTshirts, searchedTshirts: searchFilteredTshirts}, this.filterTshirts)
-        console.log("Search", searchFilteredTshirts)
     }
 
 

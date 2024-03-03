@@ -1,6 +1,6 @@
 import React, {Component} from "react"
 
-export default class SortTshirts extends Component {
+export default class SortUsers extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -19,9 +19,8 @@ export default class SortTshirts extends Component {
                 <div className="sort-dropdown">
                     <select onChange={this.handleSort} defaultValue="">
                         <option value="" disabled>Sort</option>
-                        <option value="price-low-high">Price: Low to High</option>
-                        <option value="price-high-low">Price: High to Low</option>
-                        <option value="brand">Brand: Alphabetically</option>
+                        <option value="name-alphabetic">Name: Alphabetic</option>
+                        <option value="name-alphabetic-reverse">Name: Alphabetic Reverse</option>
                     </select>
                 </div>
             </div>

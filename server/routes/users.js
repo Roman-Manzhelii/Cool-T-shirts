@@ -7,7 +7,17 @@ const fs = require('fs')
 const JWT_PRIVATE_KEY = fs.readFileSync(process.env.JWT_PRIVATE_KEY_FILENAME, 'utf8')
 const multer = require('multer')
 const upload = multer({dest: `${process.env.UPLOADED_FILES_FOLDER}`})
-const emptyFolder = require('empty-folder')
+
+const verifyUsersJWTPassword = (req, res, next) => {
+    jwt.verify(req.headers.authorization, JWT_PRIVATE_KEY, {algorithm: "HS256"}, (err, decodedToken) => {
+        if (err) {
+            return next(err)
+        } else {
+            req.decodedToken = decodedToken
+            next()
+        }
+    })
+}
 
 const checkThatUserExistsInUsersCollection = (req, res, next) => {
     usersModel.findOne({email: req.params.email}, (err, data) => {
@@ -64,6 +74,27 @@ const checkThatFileIsAnImageFile = (req, res, next) => {
 }
 
 
+const getAllUsersDocuments = (req, res, next) => {
+    usersModel.find((err, data) => {
+        if (err) {
+            return next(err)
+        }
+        return res.json(data)
+    })
+}
+
+
+const getUserPhotoAsBase64 = (req, res, next) => {
+    fs.readFile(`${process.env.UPLOADED_FILES_FOLDER}/${req.params.filename}`, 'base64', (err, data) => {
+        if (err) {
+            return next(err)
+        }
+
+        return res.json({image: data})
+    })
+}
+
+
 const checkThatUserIsNotAlreadyInUsersCollection = (req, res, next) => {
     usersModel.findOne({email: req.params.email}, (err, data) => {
         if (err) {
@@ -117,47 +148,6 @@ const addNewUserToUsersCollection = (req, res, next) => {
 }
 
 
-const emptyUsersCollection = (req, res, next) => {
-    usersModel.deleteMany({}, (err, data) => {
-        if (err) {
-            return next(err)
-        }
-
-        if (!data) {
-            return next(createError(409, `Failed to empty users collection`))
-        }
-        return next()
-    })
-
-
-}
-
-
-const addAdminUserToUsersCollection = async (req, res, next) => {
-    try {
-        const adminPassword = `123!"£qweQWE`
-        const hash = await bcrypt.hash(adminPassword, parseInt(process.env.PASSWORD_HASH_SALT_ROUNDS))
-
-        const data = await usersModel.create({
-            name: "Administrator",
-            email: "admin@admin.com",
-            password: hash,
-            accessLevel: parseInt(process.env.ACCESS_LEVEL_ADMIN)
-        })
-
-        if (!data) {
-            return next(createError(409, `Failed to create Admin user for testing purposes`))
-        }
-
-        emptyFolder(process.env.UPLOADED_FILES_FOLDER, false, () => {
-            return res.json(data)
-        })
-    } catch (err) {
-        next(err)
-    }
-}
-
-
 const returnUsersDetailsAsJSON = (req, res, next) => {
     const token = jwt.sign({
         email: req.data.email,
@@ -200,20 +190,31 @@ const returnUsersDetailsAsJSON = (req, res, next) => {
 }
 
 
+const deleteUserDocument = (req, res, next) => {
+    usersModel.findByIdAndRemove(req.params.id, (err, data) => {
+        if (err) {
+            return next(err)
+        }
+        return res.json(data)
+    })
+}
+
+
 const logout = (req, res) => {
     return res.json({})
 }
 
 
-// IMPORTANT
-// Obviously, in a production release, you should never have the code below, as it allows a user to delete a database collection
-// The code below is for development testing purposes only
-router.post(`/users/reset_user_collection`, emptyUsersCollection, addAdminUserToUsersCollection)
+router.get(`/users`, verifyUsersJWTPassword, getAllUsersDocuments)
+
+router.get(`/users/photo/:filename`, verifyUsersJWTPassword, getUserPhotoAsBase64)
 
 router.post(`/users/register/:name/:email/:password`, upload.single("profilePhoto"), checkThatFileIsUploaded, checkThatFileIsAnImageFile, checkThatUserIsNotAlreadyInUsersCollection, addNewUserToUsersCollection)
 
 router.post(`/users/login/:email/:password`, checkThatUserExistsInUsersCollection, checkThatJWTPasswordIsValid, returnUsersDetailsAsJSON)
 
 router.post(`/users/logout`, logout)
+
+router.delete(`/users/:id`, verifyUsersJWTPassword, deleteUserDocument)
 
 module.exports = router
