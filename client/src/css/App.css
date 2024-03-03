@@ -43,7 +43,7 @@
 .red-button,
 .blue-button
 {
-
+border-radius: 5px;
     margin-bottom: 10px;
     display: block;
     color: white;
@@ -297,7 +297,7 @@ height: 70px;
     margin-top: 50px;
 }
 .red-button{
-    height: 40px;
+    height: 50px;
 }
 .shoppingcart-tshirt{
     padding: 40px;
