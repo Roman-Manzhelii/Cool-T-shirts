@@ -29,7 +29,7 @@ export default class UserTableRow extends Component {
         const imgElementId = `user-photo-${this.props.user._id}`
 
         return (
-            <tr>
+            <tr className="userinfo">
                 <td>{this.props.user.name}</td>
                 <td>{this.props.user.email}</td>
                 <td>{this.props.user.accessLevel}</td>
@@ -43,7 +43,7 @@ export default class UserTableRow extends Component {
                         <Link className="delete-button" to={"/DeleteUser/" + this.props.user._id}>Delete</Link>
                         : null
                     }
-                    <Link className="blue-button" to={"/DisplaySales/" + this.props.user.email}>View Parches</Link>
+                    <Link className="blue-button" to={"/DisplaySales/" + this.props.user.email}>View Purchases</Link>
                 </td>
             </tr>
         )

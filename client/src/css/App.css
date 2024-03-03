@@ -54,6 +54,14 @@ border-radius: 5px;
     background-color: #0d0d26;
 }
 
+.userinfo{
+    margin-top: 150px;
+    margin-bottom: 100px;
+}
+tr{
+    margin-bottom: 50px;
+}
+
 
 
 
@@ -327,4 +335,15 @@ button{
 
 .search-container{
     display: flex;
+}
+
+@media screen AND (max-width: 600px) {
+    .form-container{
+        background-image: linear-gradient(to right, #0055ff , #99bbff);
+        width: 100%;
+    }
+    .nav-item{
+        background-color: #0d0d26;
+    }
+
 }
