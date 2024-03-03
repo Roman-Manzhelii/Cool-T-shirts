@@ -52,3 +52,33 @@ hr{
     margin-bottom: 30px;
     border-radius: 5px;
 }
+
+@media (min-width:700px) {
+    body{
+        margin: 0;
+    }
+    .My-header{
+        width:100%;
+    }
+    header{
+        width:100%;
+    }
+    footer{
+        width: 100%;
+    }
+    #root {
+        margin-top: 0;
+        max-width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: baseline;
+        justify-content: center;
+    }
+    .My-footer{
+        width:100%
+    }
+
+    .user-table{
+        width: 50%;
+    }
+}
