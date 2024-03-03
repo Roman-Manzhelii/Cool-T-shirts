@@ -80,10 +80,10 @@ export default class DisplayAllTshirts extends Component {
 
                 {localStorage.accessLevel >= ACCESS_LEVEL_NORMAL_USER ?
                     <div className="shoppingcart-tshirt">
-            <span className="material-symbols-outlined">
+
+                        <Link className="shoppingcart-button" to={"/ShoppingCart"}><span className="material-symbols-outlined">
                     shopping_bag
-            </span>
-                        <Link className="shoppingcart-button" to={"/ShoppingCart"}>Cart</Link>
+            </span></Link>
                     </div>
                     :
                     null

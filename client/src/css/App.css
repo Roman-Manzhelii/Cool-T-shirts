@@ -270,8 +270,12 @@ input{
     border-radius: 8px;
 }
 .material-symbols-outlined{
-    font-size: 40px;
+    font-size: 50px;
+    color: black;
 
+}
+.material-symbols-outlined:hover{
+    color: #0b5ed7;
 }
 .nav-item {
     display: flex;
@@ -312,10 +316,15 @@ button{
     width: 100px;
     padding: 10px 30px;
     color: white;
+    border-radius: 5px;
 
 }
 .error {
     color: darkred;
     font-size: 20px;
     padding: 100px 100px;
+}
+
+.search-container{
+    display: flex;
 }
