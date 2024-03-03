@@ -1,6 +1,6 @@
 import React, {Component} from "react"
 
-export default class SortTshirts extends Component {
+export default class SortSales extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -21,7 +21,6 @@ export default class SortTshirts extends Component {
                         <option value="" disabled>Sort</option>
                         <option value="price-low-high">Price: Low to High</option>
                         <option value="price-high-low">Price: High to Low</option>
-                        <option value="brand">Brand: Alphabetically</option>
                     </select>
                 </div>
             </div>

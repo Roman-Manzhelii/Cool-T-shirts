@@ -64,7 +64,7 @@ const validateTshirtFields = (req, res, next) => {
         return res.json({errorMessage: `Brand cannot be empty`})
     }
     if (req.body.rating.length === 0 || !["1", "2", "3", "4", "5"].includes(req.body.rating)) {
-        return res.status(400).json({errorMessage: "The rating can be one of the following values: 1, 2, 3, 4, 5"});
+        return res.status(400).json({errorMessage: "The rating can be one of the following values: 1, 2, 3, 4, 5"})
     }
     if (req.body.price.length === 0 || req.body.price < 0.01 || req.body.price > 100000) {
         return res.json({errorMessage: `Price needs to be between €0.01 and €100000`})

@@ -9,7 +9,6 @@ import Footer from "./components/Footer"
 
 
 import Register from "./components/Register"
-// import ResetDatabase from "./components/ResetDatabase"
 import Login from "./components/Login"
 import Logout from "./components/Logout"
 import AddTshirt from "./components/AddTshirt"
@@ -20,6 +19,9 @@ import BuyTshirt from "./components/BuyTshirt"
 import PayPalMessage from "./components/PayPalMessage"
 import LoggedInRoute from "./components/LoggedInRoute"
 import ShoppingCart from "./components/ShoppingCart"
+import DisplayAllUsers from "./components/DisplayAllUsers";
+import DeleteUser from "./components/DeleteUser";
+import DisplaySales from "./components/DisplaySales";
 
 
 if (typeof localStorage.accessLevel === "undefined") {
@@ -41,7 +43,6 @@ export default class App extends Component {
                 </div>
                 <Switch>
                     <Route exact path="/Register" component={Register}/>
-                    {/*<Route exact path="/ResetDatabase" component={ResetDatabase}/>*/}
                     <Route exact path="/" component={DisplayAllTshirts}/>
                     <Route exact path="/Login" component={Login}/>
                     <Route exact path="/BuyTshirt/:id" component={BuyTshirt}/>
@@ -50,9 +51,11 @@ export default class App extends Component {
                     <LoggedInRoute exact path="/AddTshirt" component={AddTshirt}/>
                     <LoggedInRoute exact path="/EditTshirt/:id" component={EditTshirt}/>
                     <LoggedInRoute exact path="/DeleteTshirt/:id" component={DeleteTshirt}/>
+                    <LoggedInRoute exact path="/DeleteUser/:id" component={DeleteUser}/>
                     <LoggedInRoute exact path="/ShoppingCart" component={ShoppingCart}/>
+                    <LoggedInRoute exact path="/UsersTable" component={DisplayAllUsers}/>
+                    <LoggedInRoute exact path="/DisplaySales/:email" component={DisplaySales}/>
                     <Route exact path="/DisplayAllTshirts" component={DisplayAllTshirts}/>
-
                     <Route path="*" component={DisplayAllTshirts}/>
                 </Switch>
                 <div className="My-footer">
