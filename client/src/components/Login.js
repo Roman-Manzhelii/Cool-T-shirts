@@ -73,7 +73,7 @@ export default class Login extends Component {
                     onChange={this.handleChange}
                 /><br/><br/>
 
-                <div className="nav-item">
+                <div>
                     <LinkInClass value="Login" className="green-button" onClick={this.handleSubmit}/>
                     <Link className="red-button" to={"/DisplayAllTshirts"}>Cancel</Link>
                 </div>

@@ -7,9 +7,9 @@ const Footer = () => {
         <footer>
             <div>
             <div className="sponsors">
-            <img src="./photos/aa.png" alt="logo"/>
-            <img src="./photos/bdf.jpg" alt="logo"/>
-            <img src="./photos/tally.jpg" alt="logo"/>
+            <img src="../photos/aa.png" alt="logo"/>
+            <img src="../photos/bdf.jpg" alt="logo"/>
+            <img src="../photos/tally.jpg" alt="logo"/>
             </div>
             <div className="additional-links">
                 <ul>
