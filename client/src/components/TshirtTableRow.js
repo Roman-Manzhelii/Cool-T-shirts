@@ -56,7 +56,7 @@ export default class TshirtTableRow extends Component {
                 <td>
                     {localStorage.accessLevel >= ACCESS_LEVEL_NORMAL_USER ? soldOrForSale : null}
                     {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN ?
-                        <Link className="edit-button" to={"//" + this.props.tshirt._id}>Edit</Link> : null}
+                        <Link className="edit-button" to={"/EditTshirt/" + this.props.tshirt._id}>Edit</Link> : null}
                     {localStorage.accessLevel >= ACCESS_LEVEL_ADMIN ?
                         <Link className="delete-button" to={"/DeleteTshirt/" + this.props.tshirt._id}>Delete</Link>
                         : null}
