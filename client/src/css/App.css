@@ -108,8 +108,8 @@ color:pink;
 
 #profilePhoto
 {
-    width: 50px;
-    height: 50px;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
     border: thin solid #aaa;
     float:right;
@@ -267,9 +267,35 @@ input{
 .red-button,
 .nav-item
 {
+
     border-radius: 8px;
 }
 .material-symbols-outlined{
     font-size: 40px;
 
+}
+.nav-item {
+    display: flex;
+    width: 100px;
+    background-color: #0d0d26;
+    margin-top: 0;
+    justify-content: center;
+height: 40px;
+}
+
+.logout {
+    width: 80%;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 60px;
+    justify-content: space-around;
+    margin-top: 50px;
+}
+.red-button{
+    height: 40px;
+}
+.shoppingcart-tshirt{
+    padding: 40px;
 }

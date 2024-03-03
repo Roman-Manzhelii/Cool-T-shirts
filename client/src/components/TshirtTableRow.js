@@ -27,7 +27,7 @@ export default class TshirtTableRow extends Component {
                 <li>{this.props.tshirt.style}</li>
                 <li>{this.props.tshirt.color}</li>
                 <li>{this.props.tshirt.brand}</li>
-                <li>{this.props.tshirt.price}</li>
+    <li><p>&euro;</p>{this.props.tshirt.price}</li>
 </td>
                 <td className="tshirtPhotos">
                     {this.props.tshirt.photos.map(photo => <img key={photo._id} id={photo._id} alt=""/>)}
