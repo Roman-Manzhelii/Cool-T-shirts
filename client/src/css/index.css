@@ -43,8 +43,12 @@ footer img{
   width:100px;
 }
 hr{
-    color: white;
-    width:600px;
-    height:4px;
-
+    height: 4px;
+    background: white;
+    position: relative;
+    top: 10px;
+    border: none;
+    width: 600px;
+    margin-bottom: 30px;
+    border-radius: 5px;
 }

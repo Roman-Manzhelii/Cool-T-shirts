@@ -58,7 +58,9 @@ export default class ShoppingCart extends Component {
         const tshirtIds = this.state.tshirts.map(tshirt => tshirt._id)
 
         return (
+
             <div className="form-cart">
+
                 {this.state.redirectToDisplayAllTshirts ? <Redirect to="/DisplayAllTshirts"/> : null}
                 {this.state.errorMessage}
                 <table>

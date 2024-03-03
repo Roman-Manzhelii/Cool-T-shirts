@@ -253,3 +253,23 @@ input{
     width: 500px;
     justify-content: space-evenly;
 }
+.add-new-tshirt .blue-button{
+    display: flex;
+    width: 400px;
+    justify-content: center;
+}
+.add-new-tshirt{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.blue-button ,
+.red-button,
+.nav-item
+{
+    border-radius: 8px;
+}
+.material-symbols-outlined{
+    font-size: 40px;
+
+}
