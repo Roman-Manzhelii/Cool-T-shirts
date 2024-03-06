@@ -52,8 +52,11 @@ export default class DisplayAllUsers extends Component {
                 <div className="table-container">
                     <UserTable users={this.state.users}/>
                 </div>
-                <Link className="blue-button" to={"/DisplayAllTshirts"}>Back</Link>
+                <div className="add-new-tshirt">
+                    <Link className="blue-button" to={"/DisplayAllTshirts"}>Back</Link>
+                </div>
             </div>
+
         )
     }
 

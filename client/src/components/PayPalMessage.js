@@ -13,27 +13,31 @@ export default class PayPalMessage extends Component {
 
         this.state = {
             redirectToDisplayAllTshirts: false,
-            buttonColour: "red-button"
+            buttonType: "error-button"
         }
     }
 
 
     componentDidMount() {
+        let messageClass = "error-message"
         if (this.props.match.params.messageType === PayPalMessage.messageType.SUCCESS) {
             this.setState({
                 heading: "PayPal Transaction Confirmation",
                 message: "Your PayPal transaction was successful.",
-                buttonColour: "green-button"
+                buttonType: "success-button",
+                messageClass: "success-message"
             })
         } else if (this.props.match.params.messageType === PayPalMessage.messageType.CANCEL) {
             this.setState({
                 heading: "PayPal Transaction Cancelled",
-                message: "You cancelled your PayPal transaction. Therefore, the transaction was not completed."
+                message: "You cancelled your PayPal transaction. Therefore, the transaction was not completed.",
+                messageClass: messageClass
             })
         } else if (this.props.match.params.messageType === PayPalMessage.messageType.ERROR) {
             this.setState({
                 heading: "PayPal Transaction Error",
-                message: "An error occurred when trying to perform your PayPal transaction. The transaction was not completed. Please try to perform your transaction again."
+                message: "An error occurred when trying to perform your PayPal transaction. The transaction was not completed. Please try to perform your transaction again.",
+                messageClass: messageClass
             })
         } else {
             console.log("The 'messageType' prop that was passed into the PayPalMessage component is invalid. It must be one of the following: PayPalMessage.messageType.SUCCESS, PayPalMessage.messageType.CANCEL or PayPalMessage.messageType.ERROR")
@@ -43,7 +47,8 @@ export default class PayPalMessage extends Component {
 
     render() {
         return (
-            <div className="payPalMessage">
+            <div className={`payPalMessage ${this.state.messageClass}`}>
+
 
                 {this.state.redirectToDisplayAllTshirts ? <Redirect to="/DisplayAllTshirts"/> : null}
 
@@ -55,7 +60,7 @@ export default class PayPalMessage extends Component {
                     <p>Your PayPal payment confirmation is <span
                         id="payPalPaymentID">{this.props.match.params.payPalPaymentID}</span></p> : null}
 
-                <p id="payPalPaymentIDButton"><Link className={this.state.buttonColour}
+                <p id="payPalPaymentIDButton"><Link className={this.state.buttonType}
                                                     to={"/DisplayAllTshirts"}>Continue</Link></p>
             </div>
         )

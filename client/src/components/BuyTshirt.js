@@ -71,18 +71,29 @@ export default class BuyTshirt extends Component {
         })
     }
 
-
     render() {
         return (
-            <div>
+            <div className="paypal-container">
                 {this.state.redirectToPayPalMessage ? <Redirect
                     to={`/PayPalMessage/${this.state.payPalMessageType}/${this.state.payPalOrderID}`}/> : null}
 
                 <PayPalScriptProvider options={{currency: "EUR", "client-id": SANDBOX_CLIENT_ID}}>
-                    <PayPalButtons style={{layout: "horizontal"}} createOrder={this.createOrder}
-                                   onApprove={this.onApprove} onError={this.onError} onCancel={this.onCancel}/>
+                    <PayPalButtons
+                        style={{
+                            layout: "horizontal",
+                            height: 40,
+                            shape: "rect",
+                            color: "blue",
+                            label: "buynow",
+                            tagline: false
+                        }}
+                        createOrder={this.createOrder}
+                        onApprove={this.onApprove}
+                        onError={this.onError}
+                        onCancel={this.onCancel}/>
                 </PayPalScriptProvider>
             </div>
         )
     }
+
 }

@@ -29,10 +29,8 @@ export default class Logout extends Component {
 
     render() {
         return (
-            <div className="nav-item">
-
+            <div>
                 {!this.state.isLoggedIn ? <Redirect to="/DisplayAllTshirts"/> : null}
-
                 <LinkInClass value="Log out" className="red-button" onClick={this.handleSubmit}/>
             </div>
         )

@@ -1,159 +1,116 @@
-
-
 .form-container,
-.table-container 
-{
-  max-width:100%;
-  margin: 0 auto;
+.table-container {
+    max-width: 100%;
+    margin: 0 auto;
 
 }
+
 .form-container {
     display: flex;
     justify-content: center;
     margin-top: 0;
     flex-direction: column;
     align-items: center;
-}
-.welcome-container{
-    margin-top: 30px;
-    width:800px;
-    display:flex;
-    justify-content: center;
-}
-.welcome{
-    width:200px;
-    margin-bottom: 10px;
-}
-.form-container
-{
-
-      border:thin solid #aaaaaa;
+    border: thin solid #aaaaaa;
     border-radius: 5px;
-    background-image: linear-gradient(to right, #0055ff , #99bbff);
+    background-image: linear-gradient(to right, #0055ff, #99bbff);
     width: 100%;
 }
 
-
-.logout
-{
-    margin-bottom:30px;
+.welcome-container {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
 }
 
-/* link buttons */
+.welcome {
+    top: 5px;
+    right: auto;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    width: 200px;
+    margin-bottom: 10px;
+}
+
+
 .green-button,
 .red-button,
-.blue-button
-{
-border-radius: 5px;
+.blue-button {
+    border-radius: 8px;
     margin-bottom: 10px;
     display: block;
     color: white;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
-  cursor:pointer;
+    cursor: pointer;
     background-color: #0d0d26;
 }
 
-.userinfo{
+.userinfo {
     margin-top: 150px;
     margin-bottom: 100px;
 }
-tr{
-    margin-bottom: 50px;
+
+input [type="button"] {
+    color: pink;
 }
 
-
-
-
-
-
-/* end of link buttons */
-
-
-
-
-input [type="button"] 
-{
-color:pink;
+.table-container table {
+    width: 100%;
+    border-collapse: collapse;
 }
 
-.table-container table
-{
-    width:100%;
-    border-collapse:collapse;
-}
-
-.table-container thead
-{
+.table-container thead {
     background-color: #aaa;
-    color:#fff;
+    color: #fff;
     text-align: left;
     text-transform: capitalize;
 }
 
-
-
 .table-container thead th,
-.table-container tbody td
-{
-    padding:5px;
+.table-container tbody td {
+    padding: 5px;
 }
-.table-container tbody tr:nth-child(odd) 
-{
+
+.table-container tbody tr:nth-child(odd) {
     background-color: #eee;
 }
 
-.table-container tbody tr:nth-child(even) 
-{
-    background-color:  #b3c6ff;
+.table-container tbody tr:nth-child(even) {
+    background-color: #b3c6ff;
 }
 
-.add-new-tshirt
-{
-    margin-top:1em;
+.add-new-tshirt {
+    margin-top: 1em;
 }
 
-#profilePhoto
-{
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    border: thin solid #aaa;
-    float:right;
-    background-size:contain;
-}
 
-.tshirtPhotos
-{
-    overflow-x: auto;
-    white-space: nowrap;
-    height: 400px;
+.tshirtPhotos {
+    position: relative;
+    height: 300px;
+    width: 270px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
 }
 
-.tshirtPhotos img
-{
-    padding:0;
-    margin:0;
-    margin-right:0.5em;
-    border:thin solid #ccc;
+.tshirtPhotos img {
+    padding: 0;
+    margin: 0 0.5em;
+    border: thin solid #ccc;
 
 }
 
-.nav-item {
-display: flex;
-    width: 100%;
-    background-color: #0d0d26;
-    margin-top: 0;
-}
-
-tbody{
-    display:flex;
-    flex-direction:row;
+tbody {
+    display: flex;
+    flex-direction: row;
     justify-content: space-between;
     flex-wrap: wrap;
 }
+
 tr {
     border-radius: 10px;
     display: flex;
@@ -163,11 +120,19 @@ tr {
     padding: 5px;
     align-items: center;
     flex-direction: column-reverse;
+    transition: transform 0.3s ease;
+    box-shadow: 0 35px 80px rgba(0, 0, 0, 0.15);
 }
-.tbody.tr{
+
+tr:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+}
+
+.tbody.tr {
     border-radius: 10px;
-    position:relative;
-    display:flex;
+    position: relative;
+    display: flex;
     justify-content: center;
     align-items: flex-start;
     width: 350px;
@@ -176,6 +141,7 @@ tr {
     transition: 0.5s;
     box-shadow: 0 35px 80px rgba(0, 0, 0, 0.15);
 }
+
 .tr .tshirtPhotos .tshirteditdelete {
     position: absolute;
     top: 20px;
@@ -186,177 +152,501 @@ tr {
     overflow: hidden;
     transition: 0.5s;
 }
- .tshirtPhotos{
-    height: 300px;
-     width: 270px;
+
+#profilePhoto {
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 40px;
+    border: 0;
 }
+
+
 .tshirtPhotos {
+    position: relative;
+    height: 300px;
+    width: 270px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-input{
-    width: 800px;
+input {
     height: 50px;
     border-radius: 10px;
     border: none;
 }
 
 
-
-
-
-
 .photos-container {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
 }
 
 .photo {
-    max-width: 100px;
-    max-height: 150px;
-    margin: 5px;
+    flex: 0 1 calc(33.333% - 20px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: auto;
 }
-.td ,img{
-   max-width: 230px;
-    max-height: 250px;
-    border-radius:10px;
-}
-.td ,img:hover{
-    transform : scale(1.1);
-    transition: 0.5s;
 
+.photo img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 5px;
 }
-.tshirtDetails ,li {
+
+.td, img {
+    max-width: 230px;
+    max-height: 250px;
+    border-radius: 10px;
+}
+
+
+.tshirtDetails, li {
     display: flex;
     width: 100%;
     justify-content: space-around;
     font-family: "Lucida Console", "Courier New", monospace;
 
 }
+
+.additional-links ul {
+    padding: 0;
+}
+
+.sold-out {
+    font-weight: bold;
+    font-family: "Lucida Console", "Courier New", monospace;
+    margin-right: 5px;
+}
+
+
 .edit-button,
-.delete-button{
+.delete-button {
     padding: 10px 12px;
     text-align: center;
     text-decoration: none;
     border: none;
-    color: white;display: inline-block;
+    color: white;
+    display: inline-block;
     font-size: 13px;
     margin: 4px 2px;
     cursor: pointer;
     border-radius: 5px;
+    background-color: #0d0d26;
 }
 
-.edit-button{
-   background-color:  #0d0d26;
-}
-.delete-button {
-    background-color: #0055ff;
-
+.edit-button:hover,
+.delete-button:hover {
+    background-color: #32326c;
 }
 
-.sponsors{
-    display:flex;
+.sponsors {
+    display: flex;
     width: 500px;
     justify-content: space-evenly;
 }
-.add-new-tshirt .blue-button{
-    display: flex;
-    width: 400px;
-    justify-content: center;
+
+.add-new-tshirt .blue-button {
+    width: 300px;
 }
-.add-new-tshirt{
+
+.add-new-tshirt {
     display: flex;
     justify-content: center;
     align-items: center;
 }
-.blue-button ,
-.red-button,
-.nav-item
-{
 
-    border-radius: 8px;
+.green-button:hover,
+.blue-button:hover,
+.red-button:hover {
+    background-color: #32326c;
 }
-.material-symbols-outlined{
+
+.material-symbols-outlined {
     font-size: 50px;
     color: black;
 
 }
-.material-symbols-outlined:hover{
+
+.material-symbols-outlined:hover {
     color: #0b5ed7;
 }
-.nav-item {
-    display: flex;
-    width: 100px;
-    background-color: #0d0d26;
-    margin-top: 0;
-    justify-content: center;
-height: 70px;
-}
+
 
 .logout {
-    width: 80%;
-    height: 70px;
+    position: absolute;
+    top: 5px;
+    right: 90px;
     display: flex;
     align-items: center;
     flex-direction: column;
-    padding: 60px;
-    justify-content: space-around;
-    margin-top: 50px;
+    justify-content: center;
 }
-.red-button{
-    height: 50px;
+
+.sales-table,
+.user-table {
+    position: absolute;
+    top: 5px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
 }
-.shoppingcart-tshirt{
+
+
+.shoppingcart-tshirt {
     padding: 40px;
 }
+
+.form-cart {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.paypal-container {
+    margin-top: 10px;
+    transform: scale(1.12);
+}
+
 .photos-container {
     display: flex;
-    height: 300px;
-    margin-bottom: 40px;
+    height: 240px;
     flex-direction: column;
     align-items: flex-start;
 }
 
-button{
-    border: none;
+button {
     background-color: #0d0d26;
-    width: 100px;
-    padding: 10px 30px;
     color: white;
+    padding: 10px 20px;
+    font-size: 14px;
+    border: none;
     border-radius: 5px;
-
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    transition: background-color 0.3s;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
-.error {
-    color: darkred;
-    font-size: 20px;
-    padding: 100px 100px;
+
+button:hover {
+    background-color: #32326c;
 }
 
-.search-container{
+.navigation-button {
+    background: none;
+    border: none;
+    color: black;
+    cursor: pointer;
+    font-size: 24px;
+    padding: 0 10px;
+}
+
+.navigation-button:hover {
+    color: #5656b6;
+    transform: scale(1.1);
+}
+
+.tshirtPhotos button {
+    background: none;
+    border: none;
+    color: black;
+    cursor: pointer;
+    font-size: 24px;
+    padding: 0 10px;
+}
+
+
+.search-container {
+    margin-bottom: 10px;
     display: flex;
+    width: 300px;
+}
+
+.search-container {
+    position: relative;
+    width: 300px;
+
+}
+
+.search-input {
+    width: 100%;
+    padding: 10px 60px 10px 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+.search-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+
+.payPalMessage {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #fff;
+    text-align: center;
+}
+
+.payPalMessage h3 {
+    color: #333;
+    font-size: 24px;
+}
+
+.payPalMessage p {
+    color: #666;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+#payPalPaymentID {
+    font-weight: bold;
+    color: #0d0d26;
+}
+
+#payPalPaymentIDButton {
+    margin-top: 20px;
+}
+
+.error-button,
+.success-button {
+    display: inline-block;
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.success-message {
+    border-radius: 5px;
+    border: 2px solid #28a745;
+    background-color: #dff0d8;
+}
+
+.error-message {
+    border-radius: 5px;
+    border: 2px solid #dc3545;
+    background-color: #f8d7da;
+}
+
+
+.error-button {
+    background-color: #d9534f;
+}
+
+.error-button:hover {
+    background-color: #c9302c;
+}
+
+.success-button {
+    background-color: #5cb85c;
+}
+
+.success-button:hover {
+    background-color: #4cae4c;
+}
+
+.copyright {
+    width: auto;
+}
+
+@media (max-width: 768px) {
+    .photo {
+        flex: 0 1 calc(50% - 10px);
+    }
+}
+
+@media (max-width: 480px) {
+    .photo {
+        flex: 0 1 100%;
+    }
 }
 
 @media (min-width: 300px) and (max-width: 1000px) {
-    .form-container{
+    .form-container {
+        background-image: linear-gradient(to right, #0055ff, #99bbff);
+    }
 
-        background-image: linear-gradient(to right, #0055ff , #99bbff);
-    }
-    .nav-item{
-        background-color: #0d0d26;
-    }
-    .search-container{
-        width:50%;
-    }
+
     tbody {
         display: flex;
         flex-direction: row;
         justify-content: center;
         flex-wrap: wrap;
     }
-    input {
-       width: 400px;
+}
+
+@media (max-width: 500px) {
+    .logout,
+    .sales-table,
+    .user-table {
+        top: 0;
+        right: auto;
+        flex-direction: column;
+        align-items: center;
+        position: absolute;
     }
 
+    .sales-table,
+    .user-table {
+        top: 65px;
+    }
+
+    .header,
+    .sponsors {
+        display: none;
+    }
+}
+
+@media (max-width: 600px) {
+    .copyright {
+        width: 100%;
+    }
+
+    hr {
+        display: none;
+    }
+}
+
+@media (min-width: 700px) {
+    .user-table .blue-button {
+        width: 300px;
+    }
+}
+
+.hamburger-container {
+    position: fixed;
+    top: 50%;
+    left: 0;
+    z-index: 100;
+    transition: transform 0.3s;
+    cursor: pointer;
+    transform: scale(0.8);
+}
+
+.form-check {
+    margin-left: 10px;
+}
+
+.filter-section {
+    font-family: "Lucida Console", "Courier New", monospace;
+}
+
+h5 {
+    margin: 0;
+}
+
+.filter-panel {
+    position: fixed;
+    top: 0;
+    left: -200px;
+    width: 200px;
+    height: 100%;
+    background-color: rgb(176, 203, 255);
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.48);
+    transition: left 0.3s;
+    z-index: 99;
+}
+
+.filter-panel.open {
+    left: 0;
+}
+
+.filter-panel.open + .hamburger-container {
+    transform: translateX(200px);
+}
+
+.shoppingcart-tshirt .material-symbols-outlined,
+.hamburger-container .material-symbols-outlined {
+    color: #2c2a2a;
+    animation: pulse 3s infinite;
+}
+
+.shoppingcart-tshirt:hover .material-symbols-outlined,
+.hamburger-container:hover .material-symbols-outlined {
+    color: #2c2a2a;
+    animation: shake 0.5s;
+}
+
+.search-container:hover .material-symbols-outlined,
+.search-container:hover .material-symbols-outlined {
+    color: #2c2a2a;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes shake {
+    0% {
+        transform: translate(1px, 1px) rotate(0deg);
+    }
+    10% {
+        transform: translate(-1px, -2px) rotate(-1deg);
+    }
+    20% {
+        transform: translate(-3px, 0px) rotate(1deg);
+    }
+    30% {
+        transform: translate(3px, 2px) rotate(0deg);
+    }
+    40% {
+        transform: translate(1px, -1px) rotate(1deg);
+    }
+    50% {
+        transform: translate(-1px, 2px) rotate(-1deg);
+    }
+    60% {
+        transform: translate(-3px, 1px) rotate(0deg);
+    }
+    70% {
+        transform: translate(3px, 1px) rotate(-1deg);
+    }
+    80% {
+        transform: translate(-1px, -1px) rotate(1deg);
+    }
+    90% {
+        transform: translate(1px, 2px) rotate(0deg);
+    }
+    100% {
+        transform: translate(1px, -2px) rotate(-1deg);
+    }
 }

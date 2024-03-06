@@ -26,7 +26,10 @@ export default class ShoppingCart extends Component {
         const tshirtIds = JSON.parse(localStorage.getItem("cart")) || []
 
         if (tshirtIds.length === 0) {
-            this.setState({errorMessage: "Your cart is empty. Please add some products to your cart before proceeding to checkout."})
+            this.setState({
+                tshirts: [],
+                errorMessage: "Your cart is empty. Please add some products to your cart before proceeding to checkout"
+            })
             return
         }
 
@@ -41,7 +44,7 @@ export default class ShoppingCart extends Component {
             })
             .catch(error => {
                 const errorMessage = error.response && error.response.data.errorMessage
-                    ? error.response.data.errorMessage : "An unexpected error occurred while fetching tshirts."
+                    ? error.response.data.errorMessage : "An unexpected error occurred while fetching tshirts"
                 this.setState({errorMessage})
             })
     }
@@ -58,11 +61,14 @@ export default class ShoppingCart extends Component {
         const tshirtIds = this.state.tshirts.map(tshirt => tshirt._id)
 
         return (
-
             <div className="form-cart">
-
                 {this.state.redirectToDisplayAllTshirts ? <Redirect to="/DisplayAllTshirts"/> : null}
-                {this.state.errorMessage}
+                {this.state.errorMessage &&
+                    <div className="error-message" style={{marginTop: "10px", borderRadius: "5px"}}>
+                        {this.state.errorMessage}
+                    </div>
+                }
+
                 <table>
                     <tbody>
                     {this.state.tshirts.map((tshirt) => <TshirtTableRowCart key={tshirt._id} tshirt={tshirt}
@@ -71,8 +77,8 @@ export default class ShoppingCart extends Component {
                 </table>
 
                 {tshirtIds.length > 0 ? <BuyTshirt tshirtIDs={tshirtIds} price={totalPrice}/> : null}
-                <Link className="red-button" to={"/DisplayAllTshirts"}>Continue Shopping</Link>
-
+                <Link className="red-button" style={{marginTop: "10px"}}
+                      to={"/DisplayAllTshirts"}>Continue Shopping</Link>
             </div>
         )
     }

@@ -10,7 +10,7 @@ import {ACCESS_LEVEL_NORMAL_USER, SERVER_HOST} from "../config/global_constants"
 export default class EditTshirt extends Component {
     constructor(props) {
         super(props)
-
+        this.errorMessageRef = React.createRef()
         this.state = {
             style: ``,
             color: ``,
@@ -54,6 +54,12 @@ export default class EditTshirt extends Component {
                 this.loadImages(res.data.photos)
             })
             .catch(error => console.log(error))
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (this.state.errorMessage && this.state.errorMessage !== prevState.errorMessage) {
+            this.errorMessageRef.current?.scrollIntoView({behavior: 'smooth'});
+        }
     }
 
     loadImages(photos) {
@@ -153,14 +159,27 @@ export default class EditTshirt extends Component {
     render() {
         let errorMessage = ""
         if (this.state.wasSubmittedAtLeastOnce) {
-            errorMessage = <div className="error"><br/>{this.state.errorMessage}</div>
+            errorMessage = <>{this.state.errorMessage}</>
         }
 
         return (
             <div className="form-container">
 
                 {this.state.redirectToDisplayAllTshirts ? <Redirect to="/DisplayAllTshirts"/> : null}
-
+                {errorMessage &&
+                    <div className="error-message"
+                         style={{
+                             margin: "10px 0px 30px 0px",
+                             borderRadius: "10px",
+                             padding: "10px 80px",
+                             fontSize: "26px",
+                             fontWeight: "bold",
+                             color: "#c9302c"
+                         }}
+                         ref={this.errorMessageRef}>
+                        {errorMessage}
+                    </div>
+                }
                 <Form>
                     <Form.Group controlId="style">
                         <Form.Label>Style</Form.Label>
@@ -219,13 +238,12 @@ export default class EditTshirt extends Component {
                     </Form.Group> <br/><br/>
 
                     <div className="photos-container">
-                        {this.state.photos && this.state.photos.map((photo, index) => (
+                        {this.state.photos && this.state.photos.map((photo) => (
                             <div key={photo._id} className="photo">
-                                <img src={photo.src || ''} alt={`T-shirt ${index}`}/>
-                                <button type="button"
+                                <img src={photo.src || ''} alt=""/>
+                                <button type="button" style={{marginTop: "5px"}}
                                         onClick={() => this.handleDeletePhoto(this.props.match.params.id, photo._id)}>Delete
                                 </button>
-
                             </div>
                         ))}
                     </div>
@@ -235,8 +253,6 @@ export default class EditTshirt extends Component {
 
                     <Link className="red-button" to={"/DisplayAllTshirts"}>Cancel</Link>
                 </Form>
-
-                {errorMessage}
             </div>
         )
     }

@@ -1,29 +1,42 @@
 import React, {Component} from "react"
+import Select from "react-select";
 
 export default class SortUsers extends Component {
+
+    sortOptions = [
+        {value: 'name-alphabetic', label: 'Name: Alphabetic'},
+        {value: 'name-alphabetic-reverse', label: 'Name: Alphabetic Reverse'},
+    ];
+
     constructor(props) {
         super(props)
-        this.state = {
-            showOptions: false
-        }
     }
 
-    handleSort = (e) => {
-        const sortOption = e.target.value
-        this.props.onSortChange(sortOption)
+    handleSortChange = selectedOption => {
+        this.props.onSortChange(selectedOption.value)
     }
 
     render() {
+        const customStyles = {
+            control: (base) => ({
+                ...base,
+                width: 300,
+            }),
+            menu: (base) => ({
+                ...base,
+                width: 300
+            })
+        };
         return (
-            <div>
-                <div className="sort-dropdown">
-                    <select onChange={this.handleSort} defaultValue="">
-                        <option value="" disabled>Sort</option>
-                        <option value="name-alphabetic">Name: Alphabetic</option>
-                        <option value="name-alphabetic-reverse">Name: Alphabetic Reverse</option>
-                    </select>
-                </div>
+            <div className="sort-dropdown">
+                <Select
+                    options={this.sortOptions}
+                    onChange={this.handleSortChange}
+                    placeholder="Sort"
+                    isSearchable={false}
+                    styles={customStyles}
+                />
             </div>
-        )
+        );
     }
 }

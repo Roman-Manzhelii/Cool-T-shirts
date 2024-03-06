@@ -5,7 +5,7 @@ import React from 'react'
 const Header = () => {
     return (
         <header>
-            <img src="../photos/C.png" alt="logo"/>
+            <img className="header" src="../photos/C.png" alt=""/>
         </header>
     )
 }

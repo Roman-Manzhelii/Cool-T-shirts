@@ -12,7 +12,7 @@ import {ACCESS_LEVEL_ADMIN, SERVER_HOST} from "../config/global_constants"
 export default class AddTshirt extends Component {
     constructor(props) {
         super(props)
-
+        this.errorMessageRef = React.createRef()
         this.state = {
             style: "",
             color: "",
@@ -33,6 +33,12 @@ export default class AddTshirt extends Component {
 
     componentDidMount() {
         this.inputToFocus.focus()
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if (this.state.errorMessage && this.state.errorMessage !== prevState.errorMessage) {
+            this.errorMessageRef.current?.scrollIntoView({behavior: 'smooth'});
+        }
     }
 
 
@@ -92,14 +98,27 @@ export default class AddTshirt extends Component {
     render() {
         let errorMessage = ""
         if (this.state.wasSubmittedAtLeastOnce) {
-            errorMessage = <div className="error"><br/>{this.state.errorMessage}</div>
+            errorMessage = <>{this.state.errorMessage}</>
         }
 
         return (
             <div className="form-container">
                 {this.state.redirectToDisplayAllTshirts ? <Redirect to="/DisplayAllTshirts"/> : null}
 
-
+                {errorMessage &&
+                    <div className="error-message"
+                         style={{
+                             margin: "10px 0px 30px 0px",
+                             borderRadius: "10px",
+                             padding: "10px 80px",
+                             fontSize: "26px",
+                             fontWeight: "bold",
+                             color: "#c9302c"
+                         }}
+                         ref={this.errorMessageRef}>
+                        {errorMessage}
+                    </div>
+                }
                 <Form>
                     <Form.Group controlId="style">
                         <Form.Label>Style</Form.Label>
@@ -158,12 +177,10 @@ export default class AddTshirt extends Component {
                     </Form.Group> <br/><br/>
 
 
-                    <LinkInClass value="Add" className="addbutton" onClick={this.handleSubmit}/>
+                    <LinkInClass value="Add" className="blue-button" onClick={this.handleSubmit}/>
 
                     <Link className="red-button" to={"/DisplayAllTshirts"}>Cancel</Link>
                 </Form>
-
-                {errorMessage}
             </div>
         )
     }

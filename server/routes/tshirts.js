@@ -52,7 +52,7 @@ const validateTshirtFields = (req, res, next) => {
         return res.json({errorMessage: `Color cannot be empty`})
     }
     if (!Array.isArray(req.body.size) || !req.body.size.every(size => ["XS", "S", "M", "L", "XL", "XXL"].includes(size))) {
-        return res.json({errorMessage: `Size cannot be empty. Must contain any of ["XS", "S", "M", "L", "XL", "XXL"]. Split by coma ","`})
+        return res.json({errorMessage: `Size cannot be empty. Must contain any of [XS, S, M, L, XL, XXL]. Split by coma ','`})
     }
     if (!Array.isArray(req.body.materials) || !req.body.materials.every(material => material.length > 0)) {
         return res.json({errorMessage: `Materials cannot be empty. Split by coma ","`})

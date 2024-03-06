@@ -8,13 +8,8 @@ export default class SearchUsers extends Component {
     render() {
         return (
             <div className="search-container">
-<span className="material-symbols-outlined">search
-</span>
-                <input
-                    type="text"
-                    placeholder="Search..."
-                    onChange={this.handleSearch}
-                />
+                <input type="text" placeholder="Search..." className="search-input" onChange={this.handleSearch}/>
+                <span className="material-symbols-outlined search-icon">search</span>
             </div>
         )
     }

@@ -43,14 +43,13 @@ export default class DisplayAllTshirts extends Component {
             <div className="form-container">
                 {
                     localStorage.accessLevel > ACCESS_LEVEL_GUEST ?
-                        <div className="logout">
-                            {
-                                localStorage.profilePhoto !== "null"
-                                    ? <img id="profilePhoto" src={`data:;base64,${localStorage.profilePhoto}`} alt=""/>
-                                    : null
+                        <>
+                            <div className="logout"><Logout/></div>
+                            {localStorage.profilePhoto !== "null"
+                                ? <img id="profilePhoto" src={`data:;base64,${localStorage.profilePhoto}`} alt=""/>
+                                : null
                             }
-                            <Logout/>
-                        </div>
+                        </>
                         :
                         <div className="welcome-container">
                             <div className="welcome">
@@ -80,14 +79,15 @@ export default class DisplayAllTshirts extends Component {
 
                 {localStorage.accessLevel >= ACCESS_LEVEL_NORMAL_USER ?
                     <div className="shoppingcart-tshirt">
-
-                        <Link className="shoppingcart-button" to={"/ShoppingCart"}><span className="material-symbols-outlined">
+                        <Link className="shoppingcart-button" to={"/ShoppingCart"}><span
+                            className="material-symbols-outlined">
                     shopping_bag
             </span></Link>
                     </div>
                     :
                     null
                 }
+
 
                 <SearchTshirts onSearch={this.handleSearch}/>
                 <SortTshirts onSortChange={this.handleSortChange}/>
