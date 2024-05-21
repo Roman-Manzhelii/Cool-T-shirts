@@ -116,7 +116,8 @@
 Developed by:
 - [Roman Manzhelii](https://github.com/Roman-Manzhelii)
 - [Tony](https://github.com/tony4win)
-
+- [Diane J Dalyop](https://github.com/dianedalyop)
+- 
 ## Contact
 
 For more information or questions, please contact via email: romamanzheliy1@gmail.com.
