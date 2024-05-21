@@ -111,6 +111,12 @@
 - View products
 - Register a new user account and set up a new user profile
 
-## Authors and Contact
+## Authors
 
-Developed by [Roman Manzhelii](https://github.com/Roman-Manzhelii). For more information or questions, please contact via email: romamanzheliy1@gmail.com.
+Developed by:
+- [Roman Manzhelii](https://github.com/Roman-Manzhelii)
+- [Tony](https://github.com/tony4win)
+
+## Contact
+
+For more information or questions, please contact via email: romamanzheliy1@gmail.com.
